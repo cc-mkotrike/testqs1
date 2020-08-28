@@ -50,7 +50,7 @@
         "protectedSettings": {
           "commandToExecute": "[parameters('commandToExecute')]",
           "fileUris": [
-            "[concat(parameters('_artifactsLocation'),parameters('_artifactsLocationSasToken'))]"
+            "[concat(parameters('_artifactsLocation'))]"
           ]
         }
       }
