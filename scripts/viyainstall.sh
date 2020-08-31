@@ -159,5 +159,5 @@ do
 EOF
 done
 echo "#DATA#"
-echo `ssh $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
+echo `ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
 fi
