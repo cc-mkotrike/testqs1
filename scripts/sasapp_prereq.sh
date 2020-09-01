@@ -191,7 +191,7 @@ then
 		fail_if_error $? "Error:Failed to mount $sas_home"
 		echo "Disk for $sas_home located and mounted."
 		## Adding Fstab Entries
-		echo echo "/dev/disk/azure/scsi1/lun0  $sas_home   xfs       defaults        0 0"  >> /etc/fstab
+		echo "/dev/disk/azure/scsi1/lun0  $sas_home   xfs       defaults        0 0"  >> /etc/fstab
 	fi
 else
 	echo "ERROR: $sas_home disk(lun0) is not available."
@@ -208,7 +208,7 @@ then
 	fail_if_error $? "Error:Failed to mount /sasdata"
 	echo "Disk for SASData located and mounted."
 	## Adding Fstab Entries
-	echo echo "/dev/disk/azure/scsi1/lun1  /sasdata   xfs       defaults        0 0"  >> /etc/fstab
+	echo "/dev/disk/azure/scsi1/lun1  /sasdata   xfs       defaults        0 0"  >> /etc/fstab
 else
 	echo "SASData disk not avilable on this machine."
 fi

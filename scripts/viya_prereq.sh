@@ -44,6 +44,7 @@ kv_vault_name=${14}
 secret_pvt_keyname=${15}
 secret_pub_keyname=${16}
 cas_nodes=${17}
+artifact_loc=${18}
 EOF
 
 
