@@ -159,6 +159,8 @@ do
 EOF
 done
 echo `ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
-echo "#DATA#"
-echo `ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
+sasboot=`ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
+echo "{'SAS_BOOT': '$sasboot'}" > /var/log/sas/install/sasboot.log
+echo "#SASBOOT#"
+cat /var/log/sas/install/sasboot.log 
 fi
