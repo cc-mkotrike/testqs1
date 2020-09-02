@@ -1,10 +1,3 @@
-<a name="Summary"></a>
-## Solution Summary
-By default, Quickstart deployments enable Transport Layer Security (TLS) for secure communication.
-
-This SAS 94 + Viya Quickstart Template for Azure will deploy the SAS 94 and Viya into its own network. The deployment creates the network and other infrastructure.  After the deployment process completes, you will have the outputs for the web endpoints for a SAS MidTier and Viya deployment on recommended virtual machines (VMs)
-
-![Network Diagram](sas94-viya-architecture-diagram.svg)
 
 # SAS 94 + Viya Quickstart Template for Azure
 This README for  SAS 94 + Viya Quickstart Template for Azure is used to deploy the following SAS 94 + Viya products in the Azure cloud:
@@ -18,9 +11,19 @@ This README for  SAS 94 + Viya Quickstart Template for Azure is used to deploy t
 
 This Quickstart is a reference architecture for users who want to deploy the SAS 94 + Viya platform, using microservices and other cloud-friendly technologies. By deploying the SAS platform in Azure, you get SAS analytics, data visualization, and machine-learning capabilities in an Azure-validated environment. 
 
+
 ## Contents
 - [SAS 94 + Viya Quickstart Template for Azure](#sas94-viya-quickstart-template-for-azure)
   - [Prerequisites](#prerequisites)
+
+
+<a name="Summary"></a>
+## Solution Summary
+By default, Quickstart deployments enable Transport Layer Security (TLS) for secure communication.
+
+This SAS 94 + Viya Quickstart Template for Azure will deploy the SAS 94 and Viya into its own network. The deployment creates the network and other infrastructure.  After the deployment process completes, you will have the outputs for the web endpoints for a SAS MidTier and Viya deployment on recommended virtual machines (VMs)
+
+![Network Diagram](sas94-viya-architecture-diagram.svg)
 
 <a name="Prerequisites"></a>
 ## Prerequisites
