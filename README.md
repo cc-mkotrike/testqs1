@@ -1,3 +1,11 @@
+<a name="Summary"></a>
+## Solution Summary
+By default, Quickstart deployments enable Transport Layer Security (TLS) for secure communication.
+
+This SAS 94 + Viya Quickstart Template for Azure will deploy the SAS 94 and Viya into its own network. The deployment creates the network and other infrastructure.  After the deployment process completes, you will have the outputs for the web endpoints for a SAS MidTier and Viya deployment on recommended virtual machines (VMs)
+
+![Network Diagram](sas94-viya-architecture-diagram.svg)
+
 # SAS 94 + Viya Quickstart Template for Azure
 This README for  SAS 94 + Viya Quickstart Template for Azure is used to deploy the following SAS 94 + Viya products in the Azure cloud:
 
@@ -24,7 +32,7 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
 	The license file {emailed from SAS as SAS_Viya_deployment_data.zip} which describes your SAS Software Order.
 	SAS 9.4 software order details required to download the sasdepot.
  
-* A resource group that does not already contain a Quickstart deployment. For more information, see Resource groups(https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
+* A resource group that does not already contain a Quickstart deployment. For more information, see [Resource groups](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 ### Download SAS Software for 9.4 and Viya
 * Follow the SAS Instruction to [download the SAS 9.4 Software](https://documentation.sas.com/?docsetId=biig&docsetTarget=n03005intelplatform00install.htm&docsetVersion=9.4&locale=en).
 * Follow the SAS Instruction to Create the [SAS Viya Mirror Repository](https://documentation.sas.com/?docsetId=dplyml0phy0lax&docsetTarget=p1ilrw734naazfn119i2rqik91r0.htm&docsetVersion=3.5&locale=en).
@@ -42,7 +50,7 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
  
 ### Best Practices When Deploying SAS Viya on Azure
 We recommend the following as best practices:
-* Create a separate resource group for each Quickstart deployment. For more information, see Resource groups(https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
+* Create a separate resource group for each Quickstart deployment. For more information, see [Resource groups](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 * In resource groups that contain a Quickstart deployment, include only the Quickstart deployment in the resource group to facilitate the deletion of the deployment as a unit.
 
 ### Deployment Steps
