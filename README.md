@@ -41,7 +41,7 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
 
 * Run the command to Mirror the SAS viya repository:
 
-		mirrormgr  mirror  --deployment-data  path-to-SAS_Viya_deployment_data.zip --path location-of-mirror-repository --log-file mirrormgr.log --platform 64-redhat-linux-6  --latest
+		mirrormgr  mirror  --deployment-data  <path-to-SAS_Viya_deployment_data>.zip --path <location-of-mirror-repository> --log-file mirrormgr.log --platform 64-redhat-linux-6  --latest
  
 ### Upload the SAS Software to an Azure File Share
 * Create Azure File Share with premium options. Follow the   Microsoft Azure instructions to "[Create a Premium File Share](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-premium-fileshare?tabs=azure-portal)"
