@@ -36,7 +36,9 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
 ### Download SAS Software for 9.4 and Viya
 * Follow the SAS Instruction to [download the SAS 9.4 Software](https://documentation.sas.com/?docsetId=biig&docsetTarget=n03005intelplatform00install.htm&docsetVersion=9.4&locale=en).
 * Follow the SAS Instruction to Create the [SAS Viya Mirror Repository](https://documentation.sas.com/?docsetId=dplyml0phy0lax&docsetTarget=p1ilrw734naazfn119i2rqik91r0.htm&docsetVersion=3.5&locale=en).
+
 	Download SAS Mirror Manager from the [SAS Mirror Manager download site](https://support.sas.com/en/documentation/install-center/viya/deployment-tools/35/mirror-manager.html) to the machine where you want to create your mirror repository and uncompress the downloaded file.
+
 	Run the command to Mirror the SAS viya repository:
 		mirrormgr  mirror  --deployment-data  path-to-SAS_Viya_deployment_data.zip --path location-of-mirror-repository --log-file mirrormgr.log --platform 64-redhat-linux-6  --latest
  
