@@ -32,27 +32,26 @@ fi
 
 cat << EOF > $environmentLocation
 azure_storage_account=$1
-azure_storage_files_password=$2
-azure_storage_files_share=$3
-viyarepo_folder=$4
-app_name=$5
-domain_name=$6
-ansible_vmname=$7
-microservices_vmname=$8
-cascontroller_vmname=$9
-spre_vmname=${10}
-casworker_vmname=${11}
-saspwd=${12}
-caspwd=${13}
-kv_vault_name=${14}
-secret_pvt_keyname=${15}
-secret_pub_keyname=${16}
-cas_nodes=${17}
-mid_name=${18}
-artifact_loc=${19}
-compute_name=${20}
-meta_name=${21}
-stgacc_secr_name=${22}
+azure_storage_files_share=$2
+viyarepo_folder=$3
+app_name=$4
+domain_name=$5
+ansible_vmname=$6
+microservices_vmname=$7
+cascontroller_vmname=$8
+spre_vmname=${9}
+casworker_vmname=${10}
+saspwd=${11}
+caspwd=${12}
+kv_vault_name=${13}
+secret_pvt_keyname=${14}
+secret_pub_keyname=${15}
+cas_nodes=${16}
+mid_name=${17}
+artifact_loc=${18}
+compute_name=${19}
+meta_name=${20}
+stgacc_secr_name=${21}
 EOF
 
 #Defining variables with facter values
@@ -60,7 +59,6 @@ azure_storage_account=`facter azure_storage_account`
 cifs_server_fqdn="${azure_storage_account}.file.core.windows.net"
 azure_storage_files_share=`facter azure_storage_files_share`
 DIRECTORY_NFS_SHARE="sasdepot"
-azure_storage_files_password=`facter azure_storage_files_password`
 sas_home="/sas/install"
 key_vault_name=`facter kv_vault_name`
 secret_pvt_keyname=`facter secret_pvt_keyname`
@@ -139,7 +137,8 @@ if [ $? -eq 0 ]; then
 else
     echo "Hostname Update failed"
 fi
-
+az login --identity
+azure_storage_files_password=`az keyvault secret show -n $stgacc_secr_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 #Mounting File Share for SAS Viya Installation
 echo "setup cifs"
 if [ ! -d "/etc/smbcredentials" ]; then
@@ -163,7 +162,6 @@ echo -e y | ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ""
 fail_if_error $? "ERROR: Key generation failed."
 
 ## Uploading the keys to key vault
-az login --identity
 fail_if_error $? "ERROR:Az login Failed."
 
 az keyvault secret set -n ${secret_pub_keyname} --value "`cat ~/.ssh/id_rsa.pub`" --vault-name ${key_vault_name}

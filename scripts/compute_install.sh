@@ -14,7 +14,8 @@ fail_if_error() {
 depot_loc=`facter sasdepot_folder`
 store_name=`facter storage_account_name`
 store_loc=`facter file_share_name`   
-store_key=`facter store_key`   
+key_vault_name=`facter key_vault_name`
+stgacc_secr_name=`facter stgacc_secr_name`
 app_name=`facter application_name`
 sas_role=`facter sas_role`
 domain_name=`facter domain_name` 
@@ -26,7 +27,6 @@ compute_host=`facter compute_hostname`
 mid_host=`facter mid_hostname`
 sasint_secret_name=`facter sasint_secret_name`
 sasext_secret_name=`facter sasext_secret_name`
-key_vault_name=`facter key_vault_name`
 pub_keyname=`facter pub_keyname`
 plan_file_url=${artifact_loc}properties/plan.xml
 computeinstall_url=${artifact_loc}properties/compute_install.properties
@@ -40,6 +40,7 @@ az login --identity
 fail_if_error $? "Error: AZ login failed"
 sasintpw=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 sasextpw=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
+store_key=`az keyvault secret show -n $stgacc_secr_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`   
 echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
 fail_if_error $? "Error: Key Vault Access failed"
 
