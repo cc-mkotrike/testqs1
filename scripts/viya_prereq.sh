@@ -249,6 +249,8 @@ fi
 #Mounting Azure File Share for SAS Viya Play book
 stgacc_secr_name=`facter stgacc_secr_name`
 key_vault_name=`facter kv_vault_name`
+az login --identity
+fail_if_error $? "Error: Az login Failed"
 azure_storage_files_password=`az keyvault secret show -n $stgacc_secr_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 echo "setup cifs"
 cifs_server_fqdn="${azure_storage_account}.file.core.windows.net"

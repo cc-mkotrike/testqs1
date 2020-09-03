@@ -138,6 +138,7 @@ else
     echo "Hostname Update failed"
 fi
 az login --identity
+fail_if_error $? "Error: Az login Failed"
 stgacc_secr_name=`facter stgacc_secr_name`
 azure_storage_files_password=`az keyvault secret show -n $stgacc_secr_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 #Mounting File Share for SAS Viya Installation
