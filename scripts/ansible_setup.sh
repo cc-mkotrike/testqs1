@@ -164,8 +164,6 @@ echo -e y | ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ""
 fail_if_error $? "ERROR: Key generation failed."
 
 ## Uploading the keys to key vault
-fail_if_error $? "ERROR:Az login Failed."
-
 az keyvault secret set -n ${secret_pub_keyname} --value "`cat ~/.ssh/id_rsa.pub`" --vault-name ${key_vault_name}
 fail_if_error $? "ERROR:Key Vault, Public Key Upload Failed."
 
@@ -260,9 +258,7 @@ fail_if_error_phrase $?
 openssl pkcs12 -export -out ${ssl_path}/${server_cn}.pfx -inkey ${ssl_path}/$ServerKey -in ${ssl_path}/${cert_name}bundle.crt -passout pass:
 fail_if_error_phrase $?
 
-# Az Login Identity
-az login --identity
-fail_if_error_phrase $?
+# Uploading Self Signed certificate to Key Vault
 az keyvault certificate import --file $ssl_path/${server_cn}.pfx --name $cert_name --vault-name $key_vault_name
 
 echo "*** Phase 1 Completed - Ansible Startup Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
