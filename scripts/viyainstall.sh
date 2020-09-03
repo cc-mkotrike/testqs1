@@ -95,7 +95,7 @@ done
 sed -i "/\[sas_casserver_primary\]/{n;s/.*/$cascontroller_vm_name/}" $inventory
 sed -i "/\[sas_casserver_worker\]/r caswork.txt" $inventory
 sed -i "/\[ComputeServer\]/{n;s/.*/$spre_vm_name/}" $inventory
-#sed -i "/\[ComputeServices\]/{n;s/.*/$spre_vm_name/}" $inventory
+sed -i "/\[Operations\]/{n;s/.*/$spre_vm_name/}" $inventory
 sed -i "/\[programming\]/{n;s/.*/$spre_vm_name/}" $inventory
 
 #Only for internal purpose(corecompete)
