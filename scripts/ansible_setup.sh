@@ -52,6 +52,7 @@ mid_name=${18}
 artifact_loc=${19}
 compute_name=${20}
 meta_name=${21}
+stgacc_secr_name=${22}
 EOF
 
 #Defining variables with facter values

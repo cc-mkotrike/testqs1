@@ -45,6 +45,7 @@ secret_pvt_keyname=${15}
 secret_pub_keyname=${16}
 cas_nodes=${17}
 artifact_loc=${18}
+stgacc_secr_name=${19}
 EOF
 
 

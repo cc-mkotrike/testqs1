@@ -42,6 +42,7 @@ sas_sid=${15}
 store_key=${16}
 sas_role=${17}
 artifact_loc=${18}
+stgacc_secr_name=${19}
 mid_hostname=${1}${12}
 meta_hostname=${1}${13}
 compute_hostname=${1}${14}
