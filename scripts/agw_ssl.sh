@@ -32,28 +32,28 @@ m=1
 for s in ${microservice_host} ${spre_host} ${cas_host}
 do
     echo "$s" >> hosts.txt
-    echo "DNS.$m = $s" >> all_servers.txt
+    echo "        DNS.$m = $s" >> all_servers.txt
     let "m+=1"
 done
 for ((i=0; i < $nodes ; i++))
 do
     casworker_host=$app_name$casworker_vm_name$i.$domain_name
-    echo "casworker_host" >> hosts.txt
+    echo "$casworker_host" >> hosts.txt
     n=$(($i+4)) 
-    echo "DNS.$n = $casworker_host" >> all_servers.txt
+    echo "        DNS.$n = $casworker_host" >> all_servers.txt
 done
 echo " " >> all_servers.txt
 j=1
 for s in ${microservice_host} ${spre_host} ${cas_host}
 do
-    echo "IP.$j = `nslookup $s  | grep Address  | awk '{print $2}' | tail -1`" >> all_servers.
+    echo "        IP.$j = `nslookup $s  | grep Address  | awk '{print $2}' | tail -1`" >> all_servers.txt
     let "j+=1"
 done
 for ((i=0; i < $nodes ; i++))
 do
     casworker_host=$app_name$casworker_vm_name$i.$domain_name
     n=$(($i+4))
-    echo "IP.$n = `nslookup $casworker_host  | grep Address  | awk '{print $2}' | tail -1`" >> all_servers.txt
+    echo "        IP.$n = `nslookup $casworker_host  | grep Address  | awk '{print $2}' | tail -1`" >> all_servers.txt
 done
 
 
@@ -69,7 +69,7 @@ fi
 if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
     #Downloading and running agw certs yaml script
     wget $ag_ssl_yml
-    sed -i 's/dynamicagwhostname/$agw_hostname/g' viya_agw_ssl_certs.yaml
+    sed -i 's/dynamicagwhostname/${agw_hostname}/g' viya_agw_ssl_certs.yaml
     ansible-playbook viya_agw_ssl_certs.yaml -vvv
     fail_if_error $? "ERROR: AppGateway Certificates creation failed"
     #Downloading and running viya ssl certs yaml script
