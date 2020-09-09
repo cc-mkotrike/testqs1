@@ -26,6 +26,7 @@ ag_ssl_yml=${artifact_loc}ansible/playbooks/viya_agw_ssl_certs.yaml
 viya_ssl_yml=${artifact_loc}ansible/playbooks/viya_ssl_certs.yaml
 #agw_hostname="viyatest.internal.cloudapp.net"
 agw_hostname=`facter agw_hostname`
+FILE_SSL_JSON_FILE="${viyassl_path}/loadbalancer.pfx.json"
 
 #constructing all_servers file
 m=1
@@ -86,6 +87,10 @@ if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
         scp -o StrictHostKeyChecking=no $viyassl_path/localhost.key ${host}:/etc/pki/tls/private
         fail_if_error $? "ERROR: Failed to copy the key to remote ${host}"
     done < "$input_file"
+elif [[ "$SCRIPT_PHASE" -eq "2" ]]; then
+	cat "${FILE_SSL_JSON_FILE}.1" |tr -d '\n'
+elif [[ "$SCRIPT_PHASE" -eq "3" ]]; then
+	cat "${FILE_SSL_JSON_FILE}.2" |tr -d '\n' 
 fi
 
 echo "*** Phase 4 Completed -Application Gateway SSL Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
