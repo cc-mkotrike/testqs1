@@ -69,7 +69,7 @@ fi
 if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
     #Downloading and running agw certs yaml script
     wget $ag_ssl_yml
-    sed -i 's/dynamicagwhostname/${agw_hostname}/g' viya_agw_ssl_certs.yaml
+    sed -i "s/dynamicagwhostname/${agw_hostname}/g" viya_agw_ssl_certs.yaml
     ansible-playbook viya_agw_ssl_certs.yaml -vvv
     fail_if_error $? "ERROR: AppGateway Certificates creation failed"
     #Downloading and running viya ssl certs yaml script
@@ -82,7 +82,9 @@ if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
     while IFS= read -r host
     do
         scp -o StrictHostKeyChecking=no $viyassl_path/localhost.crt ${host}:/etc/pki/tls/certs
+        fail_if_error $? "ERROR: Failed to copy the certificate to remote ${host}"
         scp -o StrictHostKeyChecking=no $viyassl_path/localhost.key ${host}:/etc/pki/tls/private
+        fail_if_error $? "ERROR: Failed to copy the key to remote ${host}"
     done < "$input_file"
 fi
 
