@@ -29,6 +29,10 @@ saspwd=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault_n
 caspwd=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
 
+##Installing Apache Httpd and configuring the certificates for viya install
+yum install httpd mod_ssl -y
+systemctl enable httpd && systemctl restart httpd
+
 ###Downloading viya-ark from git
 wget $viya_ark_uri
 ##untar viya-ark

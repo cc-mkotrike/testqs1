@@ -27,6 +27,7 @@ viya_ssl_yml=${artifact_loc}ansible/playbooks/viya_ssl_certs.yaml
 #agw_hostname="viyatest.internal.cloudapp.net"
 agw_hostname=`facter agw_hostname`
 FILE_SSL_JSON_FILE="${viyassl_path}/loadbalancer.pfx.json"
+FILE_CA_B64_FILE="${viyassl_path}/sas_certificate_all.crt.b64.txt"
 
 #constructing all_servers file
 m=1
@@ -73,11 +74,15 @@ if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
     sed -i "s/dynamicagwhostname/${agw_hostname}/g" viya_agw_ssl_certs.yaml
     ansible-playbook viya_agw_ssl_certs.yaml -vvv
     fail_if_error $? "ERROR: AppGateway Certificates creation failed"
+    
     #Downloading and running viya ssl certs yaml script
     wget $viya_ssl_yml
     sed -i "/\[ alt_names \]/r all_servers.txt" viya_ssl_certs.yaml
     ansible-playbook viya_ssl_certs.yaml -vvv
     fail_if_error $? "ERROR: SAS Viya Certificates creation failed"
+    
+    #changing the certficates permission
+    chmod 600 $viyassl_path/localhost.*
     #copying server certificates to all the servers
     input_file="hosts.txt"
     while IFS= read -r host
@@ -90,7 +95,9 @@ if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
 elif [[ "$SCRIPT_PHASE" -eq "2" ]]; then
 	cat "${FILE_SSL_JSON_FILE}.1" |tr -d '\n'
 elif [[ "$SCRIPT_PHASE" -eq "3" ]]; then
-	cat "${FILE_SSL_JSON_FILE}.2" |tr -d '\n' 
+	cat "${FILE_SSL_JSON_FILE}.2" |tr -d '\n'
+elif [[ "$SCRIPT_PHASE" -eq "4" ]]; then
+    cat "$FILE_CA_B64_FILE"|tr -d '\n'
 fi
 
 echo "*** Phase 4 Completed -Application Gateway SSL Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
