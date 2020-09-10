@@ -276,8 +276,8 @@ sasext_secret_name=`facter casintpwd`
 pub_keyname=`facter secret_pub_keyname`
 
 # Setting up the public key under root user for passwordless SSH
-az login --identity
-fail_if_error $? "ERROR: Azure login failed"
+#az login --identity
+#fail_if_error $? "ERROR: Azure login failed"
 saspwd=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 caspwd=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
