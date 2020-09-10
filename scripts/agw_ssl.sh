@@ -91,6 +91,10 @@ if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
         fail_if_error $? "ERROR: Failed to copy the certificate to remote ${host}"
         scp -o StrictHostKeyChecking=no $viyassl_path/localhost.key ${host}:/etc/pki/tls/private
         fail_if_error $? "ERROR: Failed to copy the key to remote ${host}"
+        ssh -tT root@${host} << EOF
+        yum install httpd mod_ssl -y
+        systemctl enable httpd && systemctl restart httpd
+EOF
     done < "$input_file"
 elif [[ "$SCRIPT_PHASE" -eq "2" ]]; then
 	cat "${FILE_SSL_JSON_FILE}.1" |tr -d '\n'
