@@ -1,6 +1,6 @@
 #!/bin/bash
-set -x
-echo "*** Phase 4 - Application Gateway SSL Script Started at `date +'%Y-%m-%d_%H-%M-%S'` ***"
+#set -x
+#echo "*** Phase 4 - Application Gateway SSL Script Started at `date +'%Y-%m-%d_%H-%M-%S'` ***"
 
 ##Error handling functions
 fail_if_error() {
@@ -24,7 +24,6 @@ casworker_vm_name=`facter casworker_vmname`
 nodes=`facter cas_nodes`
 ag_ssl_yml=${artifact_loc}ansible/playbooks/viya_agw_ssl_certs.yaml
 viya_ssl_yml=${artifact_loc}ansible/playbooks/viya_ssl_certs.yaml
-#agw_hostname="viyatest.internal.cloudapp.net"
 agw_hostname=`facter agw_hostname`
 FILE_SSL_JSON_FILE="${viyassl_path}/loadbalancer.pfx.json"
 FILE_CA_B64_FILE="${viyassl_path}/sas_certificate_all.crt.b64.txt"
@@ -103,5 +102,4 @@ elif [[ "$SCRIPT_PHASE" -eq "3" ]]; then
 elif [[ "$SCRIPT_PHASE" -eq "4" ]]; then
     cat "$FILE_CA_B64_FILE"|tr -d '\n'
 fi
-
-echo "*** Phase 4 Completed -Application Gateway SSL Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
+#echo "*** Phase 4 Completed -Application Gateway SSL Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
