@@ -22,12 +22,6 @@ CODE_DIRECTORY="/opt/viya-ark"
 playbook_directory="$CODE_DIRECTORY/pre-install-playbook"
 viya_ark_uri=${artifact_loc}viya-ark.tar.gz
 
-# Setting up the public key under root user for passwordless SSH
-az login --identity
-fail_if_error $? "ERROR: Azure login failed"
-saspwd=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
-caspwd=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
-echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
 
 ##Installing Apache Httpd and configuring the certificates for viya install
 yum install httpd mod_ssl -y

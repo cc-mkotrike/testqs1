@@ -271,4 +271,16 @@ fail_if_error $? "Error: SAS Depot Mount Failed"
 #echo "//${cifs_server_fqdn}/${azure_storage_files_share} /${DIRECTORY_NFS_SHARE}  cifs defaults,vers=3.0,credentials=/etc/smbcredentials/${azure_storage_account}.cred,dir_mode=0777,file_mode=0777,sec=ntlmssp 0 0" >> /etc/fstab
 #mount -a
 
+sasint_secret_name=`facter sasintpwd`
+sasext_secret_name=`facter casintpwd`
+pub_keyname=`facter secret_pub_keyname`
+
+# Setting up the public key under root user for passwordless SSH
+az login --identity
+fail_if_error $? "ERROR: Azure login failed"
+saspwd=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
+caspwd=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
+echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
+
+
 echo "*** Phase 1 - Pre-Reqs Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
