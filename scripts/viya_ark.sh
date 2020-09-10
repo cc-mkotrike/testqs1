@@ -22,10 +22,10 @@ CODE_DIRECTORY="/opt/viya-ark"
 playbook_directory="$CODE_DIRECTORY/pre-install-playbook"
 viya_ark_uri=${artifact_loc}viya-ark.tar.gz
 
-
 ##Installing Apache Httpd and configuring the certificates for viya install
 yum install httpd mod_ssl -y
 systemctl enable httpd && systemctl restart httpd
+
 
 ###Downloading viya-ark from git
 wget $viya_ark_uri
