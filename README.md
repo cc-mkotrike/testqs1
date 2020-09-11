@@ -25,7 +25,7 @@ This Quickstart is a reference architecture for users who want to deploy the SAS
   - [Solution Summary](#Summary)
     - [Objective](#Objective)
   - [Architecture Diagram](#Architecture)
-  - [Prerequisites](#prerequisites)
+  - [Pre-Requisites](#prerequisites)
     - [Download SAS Software for 9.4 and Viya](#Download)
     - [Upload the SAS Software to an Azure File Share](#Upload)
     - [Best Practices When Deploying SAS Viya on Azure](#Best)
@@ -40,8 +40,21 @@ This QuickStart is intended to help SAS customers deploy a cloud-native environm
 ### Objective
 The SAS 9 & Viya QuickStart for Azure will take a SAS provided license package for SAS 9, Viya and deploy a well-architected SAS platform into the customer’s Azure subscription. The deployment creates a virtual network and other required infrastructure. After the deployment process completes, you will have the necessary details for the endpoints and connection details to log in to the new SAS Ecosystem. By default, QuickStart deployments enable Transport Layer Security (TLS) for secure communication
 
+<a name="Overview"></a>
+### Architecture Overview
+The QuickStart will setup the following environment on Microsoft Azure:
+* A Virtual Network (VNet) configured with public and private subnets. This provides the network infrastructure for your SAS 94 and SAS Viya deployments.
+* In the public subnet, a Linux bastion host acting as an Ansible Controller Host.
+* In the private subnet, a Remote Desktop instance acting as a Client Machine.
+* In the Application subnet (private subnet), Virtual Machines for:
+	* SAS 94 – Metadata, Compute and Mid-Tier
+	* SAS Viya – Microservices, SPRE, CAS Controller and CAS Workers
+* Disks required for SAS Binaries, Configuration, and Data will be provisioned using Premium Disks in Azure.
+* Security groups for Virtual Machines and Subnets.
+
+
 <a name="Architecture"></a>
-## Architecture Diagram
+### Architecture Diagram
 ![Architecture Diagram](sas94-viya-architecture-diagram.svg)
 
 <a name="Prerequisites"></a>
