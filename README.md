@@ -92,3 +92,8 @@ You can click the "Deploy to Azure" button at the beginning of this document or 
 
 The deployment takes between 1.5 to 2 hours, depending on the quantity of software licensed.
 * Refer [SAS QuickStart Deployment Guide](https://github.com/cc-mkotrike/testqs1/blob/develop_md/SAS-Quick-Start-on-Azure_v1.pdf) for more information.
+
+## Usage
+* Usage, refer section 5 in [SAS QuickStart Deployment Guide](https://github.com/cc-mkotrike/testqs1/blob/develop_md/SAS-Quick-Start-on-Azure_v1.pdf) for more information.
+* ARM Outputs, refer section 6.2 in [SAS QuickStart Deployment Guide](https://github.com/cc-mkotrike/testqs1/blob/develop_md/SAS-Quick-Start-on-Azure_v1.pdf) for more information.
+* SSH Tunneling, refer section 7.2 in [SAS QuickStart Deployment Guide](https://github.com/cc-mkotrike/testqs1/blob/develop_md/SAS-Quick-Start-on-Azure_v1.pdf) for more information.
