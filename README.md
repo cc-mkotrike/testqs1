@@ -69,10 +69,6 @@ We recommend the following as best practices:
 * In resource groups that contain a Quickstart deployment, include only the Quickstart deployment in the resource group to facilitate the deletion of the deployment as a unit.
 
 ### Deployment Steps
-Sign in to the [Azure portal](https://portal.azure.com/).
-* Now you're ready to create your template for deployment
-* In the Azure portal, search for templates and select the template icon
-* Click on add and provide a template name and description.
-* Paste the azuredeploy.json code to ARM template and click on OK to save the template.
-* Select the created template and click on deploy. 
-* Fill in the parameters field as required, accept the terms and condition at the botton to proceed with the purchase. 
+You can click the "Deploy to Azure" button at the beginning of this document or follow the instructions for a command-line (CLI) deployment using the scripts in the root of this repository.
+
+The deployment takes between 1.5 to 2 hours, depending on the quantity of software licensed.
