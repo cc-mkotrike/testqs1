@@ -4,7 +4,15 @@ This README for  SAS 94 + Viya Quickstart Template for Azure is used to deploy t
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcorecompete%2Fsas94ng-viya%2Fdevelop%2Fazuredeploy.json) 
 
-* SAS 94
+[SAS QuickStart Deployment Guide](https://github.com/cc-mkotrike/testqs1/blob/develop_md/SAS-Quick-Start-on-Azure_v1.pdf)
+
+## SAS 9 Components
+* SAS Enterprise BI Server 94
+* SAS Enterprise Miner 15.1
+* SAS Enterprise Guide 8.2
+* SAS Data Integration Server 9.4
+* SAS Office Analytics 7.4
+## SAS Viya
 * SAS Visual Analytics 8.5 on Linux
 * SAS Visual Statistics 8.5 on Linux
 * SAS Visual Data Mining and Machine Learning 8.5 on Linux
