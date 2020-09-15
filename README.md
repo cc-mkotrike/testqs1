@@ -491,11 +491,12 @@ SAS Quickstart for Azure uses the following network security groups to control a
 <a name="addDocs"></a>
 ## Additional Documentation
 <b>QuickStart Git Repository:</b>
-
-`[SAS 9.4 and Viya](https://github.com/corecompete/sas94-viya)`
+[SAS 9.4 and Viya](https://github.com/corecompete/sas94-viya)
 
 SAS 9.4 Documentation: https://support.sas.com/documentation/94/
+
 SAS Viya Documentation:  https://support.sas.com/en/software/sas-viya.html#documentation
+
 Azure Well Architected Framework: https://docs.microsoft.com/en-us/azure/architecture/framework/
 
 <a name="feedback"></a>
