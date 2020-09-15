@@ -222,7 +222,6 @@ The deployment takes between 1 and 2 hours, depending on the quantity of softwar
 
 Here are the list of the Parameters that would be required at the time of this SAS QuikStart at the time of Deployment.
 
-```
 |   Name of the Parameter           |   Default	        |   Description                   |
 | -------------------------         | ----------------- | ------------------------------- |
 |   Storage Account Name	        |   Required Input	|   The storage account name in Azure where SAS depot has been uploaded. |
@@ -257,7 +256,6 @@ Here are the list of the Parameters that would be required at the time of this S
 |   Viya CAS Worker VM Size	        |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya CAS Worker Nodes.  |
 |   Number of Viya CAS Nodes	    |   Required Input<br>Default: 1<br>Min: 1<br>Max: 100 | Number of CAS Worker Nodes required for the deployment.  |
 
-```
 
 <a name="moredetails"></a>
 ## Additional Deployment Details
