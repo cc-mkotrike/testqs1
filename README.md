@@ -493,15 +493,15 @@ SAS Quickstart for Azure uses the following network security groups to control a
 <b>QuickStart Git Repository:</b>
 [SAS 9.4 and Viya](https://github.com/corecompete/sas94-viya)
 
-SAS 9.4 Documentation: https://support.sas.com/documentation/94/
+<b>SAS 9.4 Documentation:</b> https://support.sas.com/documentation/94/
 
-SAS Viya Documentation:  https://support.sas.com/en/software/sas-viya.html#documentation
+<b>SAS Viya Documentation:</b>  https://support.sas.com/en/software/sas-viya.html#documentation
 
-Azure Well Architected Framework: https://docs.microsoft.com/en-us/azure/architecture/framework/
+<b>Azure Well Architected Framework:</b> https://docs.microsoft.com/en-us/azure/architecture/framework/
 
 <a name="feedback"></a>
 ## Send us Your Feedback
-Please reach out to Diane Hatcher(diane.hatcher@corecompete.com) and Rohit Shetty(rohit.shetty@corecompete.com) for any feedback or questions on the QuickStart.
+Please reach out to <b>Diane Hatcher</b> (diane.hatcher@corecompete.com) and <b>Rohit Shetty</b> (rohit.shetty@corecompete.com) for any feedback or questions on the QuickStart.
 
 <a name="ack"></a>
 ## Acknowledgements
