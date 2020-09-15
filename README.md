@@ -88,7 +88,7 @@ The QuickStart will setup the following environment on Microsoft Azure:
 ![Architecture Diagram](Images/sas94-viya-architecture-diagram.svg)
 
 <a name="SAS9Components"></a>
-### SAS 9.4 Components
+#### SAS 9.4 Components
 SAS 9.4 QuickStart bootstraps the infrastructure for a 3 machine SAS 9.4 environment consisting of:
 
  * 1 x SAS Metadata Server
@@ -99,7 +99,7 @@ SAS 9.4 QuickStart bootstraps the infrastructure for a 3 machine SAS 9.4 environ
 It also deploys the SAS Software stack in the machines and performs post-installation steps to validate and secure the mid-tier for encrypted communication. The template will also install SAS Thick Clients like SAS Enterprise Guide, SAS Enterprise Miner, SAS Data Integration Studio, and SAS Management Console on the Windows RDP Machine.
 
 <a name="ViyaComponents"></a>
-### SAS Viya Components
+#### SAS Viya Components
 SAS Viya Quick Start bootstraps the infrastructure required for SAS Viya MPP system consisting of: 
 
  * 1 x Ansible Controller (acts as Bastion Host)
@@ -166,11 +166,13 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
     * Microsoft.KeyVault/locations/*/read
     * Microsoft.KeyVault/vaults/*/read
 * Sufficient quota for the number of Cores in Azure Account to accommodate all the servers in the SAS 9.4 and SAS Viya ecosystem. Please check your [subscription limits](https://docs.microsoft.com/en-us/answers/questions/10982/where-do-i-see-the-current-azure-vm-quota-limits-f.html) before launching the QuickStart.  You can request an increase in standard vCPU quota limits per VM series from [Microsoft support](https://docs.microsoft.com/en-us/azure/azure-portal/supportability/per-vm-quota-requests). 
-* A SAS Software Order Confirmation Email that contains supported Quickstart products.
-    The license file {emailed from SAS as SAS_Viya_deployment_data.zip} which describes your SAS Software Order. SAS 9.4 software order details required to download the sasdepot.
 * A resource group that does not already contain a Quickstart deployment. For more information, see [Resource groups](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 * All the Server types you select must support [Accelerated Networking](https://azure.microsoft.com/en-us/updates/accelerated-networking-in-expanded-preview/) and [Premium Storage](https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#premium-ssd)
-* Refer [SAS QuickStart Deployment Guide](https://github.com/corecompete/sas94-viya/blob/master/SAS-Quick-Start-on-Azure_v1.pdf) for more information.
+* You would need AzureKeyVault Owner ID and SSH Public key to be provided in the parameters at the time of deployment. Follow the instructions on 
+    * How to [Get the AzureKeyVault OwnerID]()
+    * How to [Generate the SSH Public key](https://www.ssh.com/ssh/putty/windows/puttygen)
+* A SAS Software Order Confirmation Email that contains supported Quickstart products.
+    The license file {emailed from SAS as `SAS_Viya_deployment_data.zip`} which describes your SAS Software Order. SAS 9.4 software order details required to download the sasdepot.
 
 <a name="Download"></a>
 ### Download SAS Software for 9.4 and Viya
@@ -489,9 +491,10 @@ SAS Quickstart for Azure uses the following network security groups to control a
 <a name="addDocs"></a>
 ## Additional Documentation
 <b>QuickStart Git Repository:</b>
+
 `[SAS 9.4 and Viya](https://github.com/corecompete/sas94-viya)`
-SAS 9 Documentation: https://support.sas.com/documentation/94/
-SAS Grid Documentation: https://support.sas.com/en/software/grid-manager-support.html
+
+SAS 9.4 Documentation: https://support.sas.com/documentation/94/
 SAS Viya Documentation:  https://support.sas.com/en/software/sas-viya.html#documentation
 Azure Well Architected Framework: https://docs.microsoft.com/en-us/azure/architecture/framework/
 
