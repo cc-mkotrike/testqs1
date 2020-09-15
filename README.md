@@ -82,7 +82,7 @@ The QuickStart will setup the following environment on Microsoft Azure:
 
 <a name="Architecture"></a>
 ### Architecture Diagram
-![Architecture Diagram](images/sas94-viya-architecture-diagram.svg)
+![Architecture Diagram](Images/sas94-viya-architecture-diagram.svg)
 
 <a name="SAS9Components"></a>
 ### SAS 9.4 Components
@@ -435,30 +435,30 @@ Port forwarding via SSH (SSH tunneling) creates a secure connection between your
 ##### Step 1
 In your PuTTY configuration, configure the Public IP address and Port of your Ansible-Controller/Bastion Host Server. Ansible Controller IP and user details will be available in deployment output in the Azure portal
 
-![](images/pubip_port.jpg)
+![](Images/pubip_port.jpg)
 
 ##### Step 2: 
 In the SSH section, browse and select the vmuser private key.
 
-![](images/vmuser_ppk.jpg)
+![](Images/vmuser_ppk.jpg)
 
 
 ##### Step 3: 
 In the SSH section, select the Tunnels option and configure the RDP server private IP (ARM templates outputs) with 3389 port and source port as 50001(Random port in between 50001-60001) and click on Add.
 
-![](images/source_destination.jpg)
+![](Images/source_destination.jpg)
 
 ##### Step 4: 
 Make sure the entry has been correctly added, as shown below:
 
-![](images/forward_ports.jpg)
+![](Images/forward_ports.jpg)
 
 ##### Step 5: 
 Once all the configuration is updated, save the configuration and click on Open.
 
-![](images/configuration.jpg)
+![](Images/configuration.jpg)
 
 ##### Step 6: 
 Open an RDP connection and enter your local IP (127.0.0.1), along with the local port (i.e., Step3 Source Port) in PuTTY. The username will be (vmuser) and the password (SAS External Password Parameter Value).
 
-![](images/rdp_connection.jpg)
+![](Images/rdp_connection.jpg)
