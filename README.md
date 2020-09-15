@@ -199,7 +199,7 @@ The QuickStart deployment requires parameters related to the license file and SA
 * Once you SAS Software download is complete following the above instructions, copy/upload the complete SAS 9.4 Software depot to "sasdepot" directory. 
 * For Viya, copy/upload the downloaded mirror to "viyarepo" folder on fileshare and also upload the <b>SAS_Viya_deployment_data.zip</b> {emailed from SAS} to same "viyarepo" folder where the viya software is located
     
-#### Uploading SAS 9.4 License File
+#### SAS 9.4 License File
 * Check your SAS 9.4 license files under the <b>sid_files</b> directory in the SASDepot folder to see if the necessary SAS 9.4 license files are present. If not, please upload the SAS 9.4 License files into that directory (e.g. /storageaccountName/filesharename/sasdepot/sid_files/SAS94_xxxxxx_xxxxxxxx_LINUX_X86-64.txt). The license file will be named like SAS94_xxxxxx_xxxxxxxx_LINUX_X86-64.txt.
 
 <b>Note:</b> You might require vaules for some of the parameters that you need to provide while deploying this SAS QuickStart on Azure such as Storage Account Name, File Share Name, sasdepot folder, viyarepo folder, SAS Client license file, SAS Server license file, Storage Account Key
@@ -220,8 +220,9 @@ You can click the "Deploy to Azure" button at the beginning of this document or 
 
 The deployment takes between 1 and 2 hours, depending on the quantity of software licensed.
 
-Here are the list of the Paremeters that would be required at the time of this SAS QuikStart at the time of Deployment.
+Here are the list of the Parameters that would be required at the time of this SAS QuikStart at the time of Deployment.
 
+```
 |   Name of the Parameter           |   Default	        |   Description                   |
 | -------------------------         | ----------------- | ------------------------------- |
 |   Storage Account Name	        |   Required Input	|   The storage account name in Azure where SAS depot has been uploaded. |
@@ -256,6 +257,7 @@ Here are the list of the Paremeters that would be required at the time of this S
 |   Viya CAS Worker VM Size	        |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya CAS Worker Nodes.  |
 |   Number of Viya CAS Nodes	    |   Required Input<br>Default: 1<br>Min: 1<br>Max: 100 | Number of CAS Worker Nodes required for the deployment.  |
 
+```
 
 <a name="moredetails"></a>
 ## Additional Deployment Details
