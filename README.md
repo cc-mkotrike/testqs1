@@ -54,7 +54,10 @@ For assistance with SAS software, contact [SAS Technical Support](https://suppor
   - [Appendix](#appendix)
     - [Appendix A: Configuring Identities Service](#idservices)
     - [Appendix B: SSH Tunneling](#sshtunneling)
+    - [Appendix C: Security Considerations](#security)
   - [Additional Documentation](#addDocs)
+  - [Send us Your Feedback](#feedback)
+  - [Acknowledgements](#ack)
 
 
 <a name="Summary"></a>
@@ -462,3 +465,40 @@ Once all the configuration is updated, save the configuration and click on Open.
 Open an RDP connection and enter your local IP (127.0.0.1), along with the local port (i.e., Step3 Source Port) in PuTTY. The username will be (vmuser) and the password (SAS External Password Parameter Value).
 
 ![](Images/rdp_connection.jpg)
+
+<a name="security"></a>
+## Appendix C: Security Considerations
+#### Network Security Groups
+SAS Quickstart for Azure uses the following network security groups to control access to the servers from sources outside the virtual network. All server to server communication between subnets in the SAS  virtual network is permitted.
+
+| Name          | Ingress Rules | Egress Rules  | Servers/Subnets | Notes         |
+| ------------- | ------------- | ------------- | -------------   | ------------- |
+| Public Subnet NSG | Allow port 22/tcp from CIDR prefix specified in the "Admin Ingress Location" parameter |	Allow All | Public Subnet |	Only allowed external connections can be directly made to the servers in public Subnet. |
+| Private Subnet NSG |	Deny All |	Allow All | Private Subnet | No external connections can be directly made to the servers in private Subnet. |
+| Ansible NSG  | Allow port 22/tcp from CIDR prefix specified in the "Admin Ingress Location" parameter. Deny all others.| Allow All  | Ansible |Ansible/bastion server can be connected to through SSH only.   |
+| RDP NSG  |  Deny all | Allow All  |  Windows RDP | No external connections can be directly made to the server.   |
+| Metadata NSG  |  Deny all | Allow All  | SAS 9.4 Metadata | No external connections can be directly made to the server.   |
+| Compute NSG  |  Deny all | Allow All  |  SAS 9.4 Compute | No external connections can be directly made to the server.   |
+| Mid NSG  |  Deny all | Allow All  |  SAS 9.4 Mid-tier | No external connections can be directly made to the server.   |
+| Microservices NSG  |  Deny all | Allow All  |  SAS Viya Microservices | No external connections can be directly made to the server.   |
+| Spre NSG  |  Deny all | Allow All  |  SAS Viya Spre | No external connections can be directly made to the server.   |
+| CAS Controller NSG  |  Deny all | Allow All  |  SAS Viya CasController | No external connections can be directly made to the server.   |
+| CASWorker NSG  |  Deny all | Allow All  |  SAS Viya CasWorker | No external connections can be directly made to the server.   |
+
+
+<a name="addDocs"></a>
+## Additional Documentation
+<b>QuickStart Git Repository:</b>
+`[SAS 9.4 and Viya](https://github.com/corecompete/sas94-viya)`
+SAS 9 Documentation: https://support.sas.com/documentation/94/
+SAS Grid Documentation: https://support.sas.com/en/software/grid-manager-support.html
+SAS Viya Documentation:  https://support.sas.com/en/software/sas-viya.html#documentation
+Azure Well Architected Framework: https://docs.microsoft.com/en-us/azure/architecture/framework/
+
+<a name="feedback"></a>
+## Send us Your Feedback
+Please reach out to Diane Hatcher(diane.hatcher@corecompete.com) and Rohit Shetty(rohit.shetty@corecompete.com) for any feedback or questions on the QuickStart.
+
+<a name="ack"></a>
+## Acknowledgements
+We are thankful to <b>Intel Corporation</b> for sponsoring this development effort. We are thankful to <b>SAS Institute</b> for supporting this effort and including providing technical guidance and validation.
