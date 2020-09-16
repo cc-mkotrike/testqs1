@@ -3,7 +3,7 @@
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcorecompete%2Fsas94-viya%2Fmaster%2Fazuredeploy.json) 
 
-This README for  SAS 9.4 + Viya Quickstart Template for Azure is used to deploy the following SAS 94 + Viya products in the Azure cloud. Refer [SAS QuickStart Deployment Guide](https://github.com/corecompete/sas94-viya/blob/master/SAS-Quick-Start-on-Azure_v1.pdf) for detailed steps.
+This README for  SAS 9.4 + Viya Quickstart Template for Azure is used to deploy the following SAS 9.4 + Viya products in the Azure cloud. Refer [SAS QuickStart Deployment Guide](https://github.com/corecompete/sas94-viya/blob/master/SAS-Quick-Start-on-Azure_v1.pdf) for detailed steps.
 
 #### SAS 9.4
 * SAS Enterprise BI Server 9.4
@@ -246,10 +246,10 @@ Below is the list of the Parameters that would require to be filled during the d
 |   VNet CIDR	                    |   Default: 10.10.0.0/16   |	The CIDR block for the Virtual Network.     |
 |   Vnet Public Subnet CIDR	        |   Default: 10.10.1.0/24	|   The CIDR block for the Ansible Controller/Bastion Host Public Subnet. |
 |   SAS9.4 Private Subnet CIDR	    |   Default: 10.10.2.0/24	|   The CIDR block for the first private subnet where the SAS 9.4 and RDP machines will be deployed.  |
+|   Viya Private Subnet CIDR	    |   Default: 10.10.3.0/24	    |   The CIDR block for the second private subnet where the SAS Viya machines will be deployed.      |
 |   SAS9.4 Meta VM Size	            |   Required Input<br>Default: Standard_D4s_v3	|   VM Type for SAS Metadata Server.    |
 |   SAS9.4 Mid VM Size	            |   Required Input<br>Default: Standard_E8s_v3  |	VM Type for SAS Mid VM Server.      |
 |   SAS9.4 Compute VM Size	        |   Required Input<br>Default: Standard_E8s_v3	|   VM Type for SAS Compute Server.     |
-|   Viya Private Subnet CIDR	    |   10.10.3.0/24	    |   The CIDR block for the second private subnet where the SAS Viya machines will be deployed.      |
 |   Viya Microservices VM Size	    |   Required Input<br>Default: Standard_E16s_v3	    |   VM Type for SAS Viya Microservices Server.  |
 |   Viya SPRE VM Size	            |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya SPRE Server.       |
 |   Viya CAS Controller VM Size	    |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya CAS Controller Server. |
