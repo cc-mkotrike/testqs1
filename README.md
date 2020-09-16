@@ -3,7 +3,7 @@
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcorecompete%2Fsas94-viya%2Fmaster%2Fazuredeploy.json) 
 
-This README for  SAS 9.4 + Viya Quickstart Template for Azure is used to deploy the following SAS 9.4 + Viya products in the Azure cloud. Refer [SAS QuickStart Deployment Guide](https://github.com/corecompete/sas94-viya/blob/master/SAS-Quick-Start-on-Azure_v1.pdf) for detailed steps.
+This README for  SAS 9.4 + Viya Quickstart Template for Azure is used to deploy the following SAS 9.4 + Viya products in the Azure cloud.
 
 #### SAS 9.4
 * SAS Enterprise BI Server 9.4
@@ -169,7 +169,10 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
 * A resource group that does not already contain a Quickstart deployment. For more information, see [Resource groups](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 * All the Server types you select must support [Accelerated Networking](https://azure.microsoft.com/en-us/updates/accelerated-networking-in-expanded-preview/) and [Premium Storage](https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#premium-ssd)
 * You would need AzureKeyVault Owner ID and SSH Public key to be provided in the parameters at the time of deployment. Follow the instructions on 
-    * How to [Get the AzureKeyVault OwnerID]()
+    * To Get the AzureKeyVault OwnerID, run the below command in the Azure Powershell.
+    
+    	`Get-AzADUser -UserPrincipalName user@domain.com | grep Id`
+	
     * How to [Generate the SSH Public key](https://www.ssh.com/ssh/putty/windows/puttygen)
 * A SAS Software Order Confirmation Email that contains supported Quickstart products.
     The license file {emailed from SAS as `SAS_Viya_deployment_data.zip`} which describes your SAS Software Order. SAS 9.4 software order details required to download the sasdepot.
@@ -184,7 +187,7 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
 
 		mirrormgr  mirror  --deployment-data  <path-to-SAS_Viya_deployment_data>.zip --path <location-of-mirror-repository> --log-file mirrormgr.log --platform 64-redhat-linux-6  --latest
  
-* Refer [SAS QuickStart Deployment Guide](https://github.com/corecompete/sas94-viya/blob/master/SAS-Quick-Start-on-Azure_v1.pdf) for more information.
+
 
 <a name="Upload"></a>
 ### Upload the SAS Software to an Azure File Share
@@ -206,7 +209,6 @@ The QuickStart deployment requires parameters related to the license file and SA
  
  <b>Get Storage Account Access key</b> - Follow the Microsoft Azure instructions to "[view storage account access key](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage?tabs=azure-portal)"
 
-* Refer [SAS QuickStart Deployment Guide](https://github.com/corecompete/sas94-viya/blob/master/SAS-Quick-Start-on-Azure_v1.pdf) for more information.
  
 <a name="Best"></a>
 ## Best Practices When Deploying SAS Viya on Azure
@@ -236,7 +238,7 @@ Below is the list of the Parameters that would require to be filled during the d
 |   Resource Group Name	            |   Required Input	        |   Create New Resource Group or choose an existing Resource to launch the QuickStart resources. It is recommended to create a new resource group for each QuickStart deployment to maintain the resources. |
 |   Resource Group Location         |	Required Input	        |   Choose an appropriate location where you would like to launch your Azure resources. Please note, the Storage account with SAS Depot and Mirror Repo should exist in the same Azure region. |
 |   SAS Application Name	        |   Required Input<br>String Input<br>No spaces<br>Length – Minimum 2 & Maximum 5.	|   Choose an Application name to the group and name your resources. We recommend using your company name or project name.  This tag will be used as a prefix for the hostname of the SAS servers and Azure resources. |
-|   Key Vault Owner ID              |	Required Input	        |   Key Vault Owner Object ID Specifies the object ID of a user, service principal in the Azure Active Directory tenant. Obtain it by using Get-AzADUser or Get-AzADServicePrincipal cmdlets. e.g., In Azure Cloud PowerShell type PS> Get-Az. It is recommended to give the user object id of whomever is deploying the QuickStart. |
+|   Key Vault Owner ID              |	Required Input	        |   Key Vault Owner Object ID Specifies the object ID of a user, service principal in the Azure Active Directory tenant. Obtain it by using Get-AzADUser or Get-AzADServicePrincipal cmdlets. e.g., In Azure Cloud PowerShell type PS>`Get-AzADUser -UserPrincipalName user@domain.com | grep Id`. It is recommended to give the user object id of whomever is deploying the QuickStart. |
 |   SSH Public key	                |   Required Input	        |   The SSH public key that will be added to all the servers.   |
 |   Location	                    |   [resourceGroup().location]	|   Azure Resources location, where all the SAS 9.4 and Viya resources should be created. e.g., servers, disks, IP's etc. The default value will pick up the same location as where the resource group is created. |
 |   _artifacts Location	            |   SAS 9.4 and SAS Viya: https://raw.githubusercontent.com/corecompete/sas94ng-viya/master/  | URL of the public repository where all the templates and dependant artifacts are located in. |
