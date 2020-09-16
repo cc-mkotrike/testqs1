@@ -197,12 +197,12 @@ The QuickStart deployment requires parameters related to the license file and SA
 
 #### SAS Software Upload
 * Once you SAS Software download is complete following the above instructions, copy/upload the complete SAS 9.4 Software depot to "sasdepot" directory. 
-* For Viya, copy/upload the downloaded mirror to "viyarepo" folder on fileshare and also upload the <b>SAS_Viya_deployment_data.zip</b> {emailed from SAS} to same "viyarepo" folder where the viya software is located
+* For Viya, copy/upload the downloaded mirror to "viyarepo" folder on fileshare and also upload the <b>SAS_Viya_deployment_data.zip</b> {emailed from SAS} to the same "viyarepo" folder where the viya software is located
     
 #### SAS 9.4 License File
 * Check your SAS 9.4 license files under the <b>sid_files</b> directory in the SASDepot folder to see if the necessary SAS 9.4 license files are present. If not, please upload the SAS 9.4 License files into that directory (e.g. /storageaccountName/filesharename/sasdepot/sid_files/SAS94_xxxxxx_xxxxxxxx_LINUX_X86-64.txt). The license file will be named like SAS94_xxxxxx_xxxxxxxx_LINUX_X86-64.txt.
 
-<b>Note:</b> You might require vaules for some of the parameters that you need to provide while deploying this SAS QuickStart on Azure such as Storage Account Name, File Share Name, sasdepot folder, viyarepo folder, SAS Client license file, SAS Server license file, Storage Account Key
+<b>Note:</b> You might require values for some of the parameters that you need to provide while deploying this SAS QuickStart on Azure such as Storage Account Name, File Share Name, sasdepot folder, viyarepo folder, SAS Client license file, SAS Server license file, Storage Account Key
  
  <b>Get Storage Account Access key</b> - Follow the Microsoft Azure instructions to "[view storage account access key](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage?tabs=azure-portal)"
 
@@ -220,7 +220,7 @@ You can click the "Deploy to Azure" button at the beginning of this document or 
 
 The deployment takes between 1 and 2 hours, depending on the quantity of software licensed.
 
-Here are the list of the Parameters that would be required at the time of this SAS QuikStart at the time of Deployment.
+Below is the list of the Parameters that would require to be filled during the deployment of this SAS QuikStart.
 
 |   Name of the Parameter           |   Default	        |   Description                   |
 | -------------------------         | ----------------- | ------------------------------- |
@@ -236,7 +236,7 @@ Here are the list of the Parameters that would be required at the time of this S
 |   Resource Group Name	            |   Required Input	        |   Create New Resource Group or choose an existing Resource to launch the QuickStart resources. It is recommended to create a new resource group for each QuickStart deployment to maintain the resources. |
 |   Resource Group Location         |	Required Input	        |   Choose an appropriate location where you would like to launch your Azure resources. Please note, the Storage account with SAS Depot and Mirror Repo should exist in the same Azure region. |
 |   SAS Application Name	        |   Required Input<br>String Input<br>No spaces<br>Length – Minimum 2 & Maximum 5.	|   Choose an Application name to the group and name your resources. We recommend using your company name or project name.  This tag will be used as a prefix for the hostname of the SAS servers and Azure resources. |
-|   Key Vault Owner ID              |	Required Input	        |   Key Vault Owner Object ID Specifies the object ID of a user, service principal in the Azure Active Directory tenant. Obtain it by using Get-AzADUser or Get-AzADServicePrincipal cmdlets. e.g., In Azure Cloud PowerShell type PS> Get-Az. It is recommended to give the used object id of whoever is deploying the QuickStart. |
+|   Key Vault Owner ID              |	Required Input	        |   Key Vault Owner Object ID Specifies the object ID of a user, service principal in the Azure Active Directory tenant. Obtain it by using Get-AzADUser or Get-AzADServicePrincipal cmdlets. e.g., In Azure Cloud PowerShell type PS> Get-Az. It is recommended to give the user object id of whomever is deploying the QuickStart. |
 |   SSH Public key	                |   Required Input	        |   The SSH public key that will be added to all the servers.   |
 |   Location	                    |   [resourceGroup().location]	|   Azure Resources location, where all the SAS 9.4 and Viya resources should be created. e.g., servers, disks, IP's etc. The default value will pick up the same location as where the resource group is created. |
 |   _artifacts Location	            |   SAS 9.4 and SAS Viya: https://raw.githubusercontent.com/corecompete/sas94ng-viya/master/  | URL of the public repository where all the templates and dependant artifacts are located in. |
@@ -267,7 +267,7 @@ SAS External Users such sasinst is used for SAS 9.4 Installation. Create SAS Acc
 
 SAS Users for Viya such sas and cas are created during the deployment. These are the default user accounts for logging in SAS Viya. You cannot directly log on to the host operationg system with these accounts. 
 
-SAS Viya boot user account *sasboot* can be used to login to application. You will have the URL to reset the password of *sasboot* useraccount from the outputs section on successful deployment of the Quickstart. 
+SAS Viya boot user account *sasboot* can be used to login to the application. You will have the URL to reset the password of *sasboot* useraccount from the outputs section on the successful deployment of the Quickstart. 
 
 <b>Note:</b>You need to bind your servers and SAS Viya Application with an LDAP Server.
 
@@ -281,7 +281,7 @@ SAS Viya boot user account *sasboot* can be used to login to application. You wi
 ```
 ssh vmuser@<AnsibleControllerIP>
 ```
-2.  From the Azure Bastion Server, connect to any of the VM instance as vmuser. Passwordless SSH has been setup by default to all the servers from Ansible Controller VM.
+2.  From the Azure Bastion Server, connect to any of the VM instances as vmuser. Passwordless SSH has been set up by default to all the servers from Ansible Controller VM.
 ```
 ssh root@<anyvmserver>
 ```
@@ -317,7 +317,7 @@ The following outputs will be provided after the successful execution of the SAS
 If your deployment fails:
 * Check to ensure that all the parameters values that are provided are correct and valid.
 * Verify the downloaded SASDepot and Viya Mirro repositories are correct.
-* Verify the Premium FileShare created in the storage account is accessible to the all virtualmachines.
+* Verify the Premium FileShare created in the storage account is accessible to all virtual machines.
 * Review the failed deployment steps and see ["Deployment errors"](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-common-deployment-errors#deployment-errors) in the Azure troubleshooting documentation.
 *   In general, issues that occur in the primary deployment but do not originate from a sub-deployment are platform issues such as the inability to obtain sufficient resources in a timely manner. In these cases, you must redeploy your software. When the deployment is run via the CLI, the primary deployment is called "azure-deploy". When the deployment is run via the UI template, the primary deployment is called "Microsoft.Template". The names of sub-deployments usually begin with "Phase#".
 
@@ -368,14 +368,14 @@ The /var/log/sas/install directory is the primary deployment log directory. Othe
 
 <a name="sas9services"></a>
 ### Restart SAS 9.4 Services
-SAS 9.4 Services need to be stopped and Started in a particular order to avoid any consequences or issues while access the application. 
+SAS 9.4 Services need to be stopped and started in a particular order to avoid any consequences or issues while accessing the application. 
 ##### Stop/Start SAS Services
-The services need to be stopped/restarted on mid-tier server, compute server and metadata server in the order using the below command
+The services need to be stopped/restarted on mid-tier server, compute server, and metadata server in the order using the below command
 ```
     /opt/sas/config/Lev1/sas.services stop
     /opt/sas/config/Lev1/sas.services restart
 ```
-If the services are stopped, then they need to be started on metadata server, compute server and mid-tier server in the order using the below command
+If the services are stopped, then they need to be started on the metadata server, compute server, and mid-tier server in the order using the below command
 ```
     /opt/sas/config/Lev1/sas.services start
 ```
