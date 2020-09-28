@@ -28,23 +28,23 @@ fi
 #Facter Variables and Declaration
 cat << EOF > $environmentLocation
 azure_storage_account=$1
-azure_storage_files_password=$2
-azure_storage_files_share=$3
-DIRECTORY_NFS_SHARE=$4
-app_name=$5
-domain_name=$6
-ansible_vmname=$7
-microservices_vmname=$8
-cascontroller_vmname=$9
-spre_vmname=${10}
-casworker_vmname=${11}
-sasintpwd=${12}
-casintpwd=${13}
-kv_vault_name=${14}
-secret_pvt_keyname=${15}
-secret_pub_keyname=${16}
-cas_nodes=${17}
-artifact_loc=${18}
+azure_storage_files_share=$2
+DIRECTORY_NFS_SHARE=$3
+app_name=$4
+domain_name=$5
+ansible_vmname=$6
+microservices_vmname=$7
+cascontroller_vmname=$8
+spre_vmname=${9}
+casworker_vmname=${10}
+sasintpwd=${11}
+casintpwd=${12}
+kv_vault_name=${13}
+secret_pvt_keyname=${14}
+secret_pub_keyname=${15}
+cas_nodes=${16}
+artifact_loc=${17}
+stgacc_secr_name=${18}
 EOF
 
 
@@ -247,6 +247,11 @@ if [ $machine_name == $cascontroller_vmname ]; then
 fi
 
 #Mounting Azure File Share for SAS Viya Play book
+stgacc_secr_name=`facter stgacc_secr_name`
+key_vault_name=`facter kv_vault_name`
+az login --identity
+fail_if_error $? "Error: Az login Failed"
+azure_storage_files_password=`az keyvault secret show -n $stgacc_secr_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 echo "setup cifs"
 cifs_server_fqdn="${azure_storage_account}.file.core.windows.net"
 

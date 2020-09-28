@@ -1,17 +1,16 @@
-
-# SAS 9.4 + Viya Quickstart Template for Azure
+# SAS® QUICKSTART ON MICROSOFT® AZURE
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcorecompete%2Fsas94-viya%2Fmaster%2Fazuredeploy.json) 
 
-This README for  SAS 9.4 + Viya Quickstart Template for Azure is used to deploy the following SAS 9.4 + Viya products in the Azure cloud.
+This README for SAS® 9.4 & SAS® Viya® Quickstart Template for Azure is used to deploy the following SAS 9.4 and SAS Viya products on Microsoft® Azure cloud.
 
-#### SAS 9.4
+#### SAS® 9.4
 * SAS Enterprise BI Server 9.4
 * SAS Enterprise Miner 15.1
 * SAS Enterprise Guide 8.2
 * SAS Data Integration Server 9.4
 * SAS Office Analytics 7.4
-#### SAS Viya
+#### SAS Viya®
 * SAS Visual Analytics 8.5 on Linux
 * SAS Visual Statistics 8.5 on Linux
 * SAS Visual Data Mining and Machine Learning 8.5 on Linux
@@ -22,7 +21,7 @@ This Quickstart is a reference architecture for users who want to deploy the SAS
 For assistance with SAS software, contact [SAS Technical Support](https://support.sas.com/en/technical-support.html). When you contact support, you will be required to provide information, such as your SAS site number, company name, email address, and phone number, that identifies you as a licensed SAS software customer.
 
 ## Contents
-- [SAS 9.4 + Viya Quickstart Template for Azure](#sas94-viya-quickstart-template-for-azure)
+- [SAS® 9.4 and SAS Viya® Quickstart Template for Azure](#sas94-viya-quickstart-template-for-azure)
   - [Solution Summary](#Summary)
     - [Objective](#Objective)
     - [Architecture Overview](#Overview)
@@ -52,9 +51,8 @@ For assistance with SAS software, contact [SAS Technical Support](https://suppor
     - [Restart SAS 9.4 Services](#sas9services)
     - [Restart SAS Viya Services](#viyaservices)
   - [Appendix](#appendix)
-    - [Appendix A: Configuring Identities Service](#idservices)
-    - [Appendix B: SSH Tunneling](#sshtunneling)
-    - [Appendix C: Security Considerations](#security)
+    - [Appendix A: SSH Tunneling](#sshtunneling)
+    - [Appendix B: Security Considerations](#security)
   - [Additional Documentation](#addDocs)
   - [Send us Your Feedback](#feedback)
   - [Acknowledgements](#ack)
@@ -62,7 +60,7 @@ For assistance with SAS software, contact [SAS Technical Support](https://suppor
 
 <a name="Summary"></a>
 ## Solution Summary
-This QuickStart is intended to help SAS customers deploy a cloud-native environment that provides both SAS 9.4 platform and the SAS Viya 3.5 platform in an integrated environment. It is intended to provide an easy way for customers to get a comprehensive SAS environment, that will likely result in faster migrations and deployments into the Azure environment. The SAS ecosystem is deployed on the Azure platform, leveraging Azure native deployment approaches. As part of the deployment, you get all the powerful data management, analytics, and visualization capabilities of SAS, deployed on a high-performance infrastructure.
+This QuickStart is intended to help SAS® customers deploy a cloud-native environment that provides both SAS® 9.4 platform and the SAS® Viya® 3.5 platform in an integrated environment. It is intended to provide an easy way for customers to get a comprehensive SAS environment, that will likely result in faster migrations and deployments into the Microsoft® Azure environment. The SAS ecosystem is deployed on the Azure platform, leveraging Azure native deployment approaches. As part of the deployment, you get all the powerful data management, analytics, and visualization capabilities of SAS, deployed on a high-performance infrastructure.
 
 <a name="Objective"></a>
 ### Objective
@@ -75,8 +73,8 @@ The QuickStart will setup the following environment on Microsoft Azure:
 * In the public subnet, a Linux bastion host acting as an Ansible Controller Host.
 * In the private subnet, a Remote Desktop instance acting as a Client Machine.
 * In the Application subnets (private subnet), Virtual Machines for:
-	* <b>SAS 9.4</b>  – Metadata, Compute and Mid-Tier
-	* <b>SAS Viya</b> – Microservices, SPRE, CAS Controller and CAS Workers
+	* <b>SAS 9.4</b>  – Metadata, Compute, and Mid-Tier Servers
+	* <b>SAS Viya</b> – Microservices, SPRE, Cloud Analytic Services (CAS) Controller, and CAS Workers Servers
 * Disks required for SAS Binaries, Configuration, and Data will be provisioned using Premium Disks in Azure.
 * Security groups for Virtual Machines and Subnets.
 * Accelerated Networking is enabled on all the network interfaces.
@@ -89,14 +87,14 @@ The QuickStart will setup the following environment on Microsoft Azure:
 
 <a name="SAS9Components"></a>
 #### SAS 9.4 Components
-SAS 9.4 QuickStart bootstraps the infrastructure for a 3 machine SAS 9.4 environment consisting of:
+SAS® 9.4 QuickStart bootstraps the infrastructure for a 3 machine SAS 9.4 environment consisting of:
 
  * 1 x SAS Metadata Server
  * 1 x SAS Compute Server
  * 1 x SAS Mid-Tier Server
  * 1 x Windows RDP Machine (For accessing thick clients)
 
-It also deploys the SAS Software stack in the machines and performs post-installation steps to validate and secure the mid-tier for encrypted communication. The template will also install SAS Thick Clients like SAS Enterprise Guide, SAS Enterprise Miner, SAS Data Integration Studio, and SAS Management Console on the Windows RDP Machine.
+It also deploys the SAS Software stack in the machines and performs post-installation steps to validate and secure the mid-tier for encrypted communication. The template will also install SAS desktop clients like SAS® Enterprise Guide®, SAS® Enterprise Miner™, SAS® Data Integration Studio, and SAS® Management Console on the Windows RDP Machine.
 
 <a name="ViyaComponents"></a>
 #### SAS Viya Components
@@ -111,23 +109,27 @@ The template will run with pre-requisites to install SAS Viya on these servers a
 
 <a name="Cost"></a>
 ## Cost & Licenses
-The user is responsible for the cost of the Azure Cloud services used while running this QuickStart deployment. There is no additional cost for using the QuickStart. You will need a SAS license (emailed from SAS for SAS 9.4 and SAS Viya) to launch this QuickStart. Your SAS account team can advise on the appropriate software licensing and sizing to meet the workload and performance needs. We have given some recommended sizing for the deployment to help you choose during deployment.
+The user is responsible for the cost of the Azure Cloud services used while running this QuickStart deployment. There is no additional cost for using the QuickStart. You will need a SAS license (emailed from SAS for SAS 9.4 and SAS Viya) to launch this QuickStart. Your SAS account team can advise on the appropriate software licensing and sizing to meet the workload and performance needs. SAS software is typically licensed on maximum number of physical cores for the computational engine.
+
+In Azure, instance sizes are based on virtual CPUs (vcpus) which equates to 2 vcpus per physical core. We provide recommended instance types and sizes, based on physical cores, as a starting point for this deployment. It is important to use server types that support Accelerated Networking and Premium Storage features. You may choose to use larger instances as recommended by SAS sizing guidelines, but we recommend using the instance series noted.
+
 
 <a name="SAS9Sizing"></a>
 ### SAS 9.4 Sizing
 Here are some recommended Machine Types for SAS 9.4 environment:
 
-For <b>Metadata Server</b>, choose between 4 to 8 cores (Standard_D4s_v3 or Standard_D8s_v3) and optimum memory. 
+For <b>Metadata Server</b>, We recommend to choose instance types which have minimum  4 physical cores or 8 vcpu and 32GB RAM such as <b>Standard_D4s_v3 or Standard_D8s_v3</b>
 
-For Compute Server, choose from this list for:
+For <b>Compute Server</b>, choose from this list, based on the number of physical cores you have licensed:
 
-| Licensed Cores  |	Virtual Machine  | SKU	Memory (RAM)  |	Temporary Storage |
-| --------------- | ---------------- | ------------------ | ----------------- |
-|   4	          |  Standard_E8s_v3 |	64 GB             |	 128 GB           | 
-|   8	          |  Standard_E16s_v3 |	128 GB            |  256 GB           |
-|   4	          |  Standard_E32s_v3 |	256 GB            |	 512 GB           |
+| Licensed Cores  |	Virtual Machine   | SKU	Memory (RAM)  |	Temporary Storage |
+| --------------- | ----------------  | ----------------- | ----------------- |
+|   4	            |  Standard_E8s_v3  |	  64 GB           |	 128 GB           | 
+|   8	            |  Standard_E16s_v3 |	  128 GB          |  256 GB           |
+|   16	          |  Standard_E32s_v3 |	  256 GB          |	 512 GB           |
+|   32            |  Standard_E64s_v3 |   432 GB          |  864 GB           |
 
-For the <b>Mid-Tier server</b>, choose a machine between 4 to 8 cores with sufficient memory (minimum 40 GB) to support Web Application JVMs. Choose a machine-like <b>Standard_DS13_v2, Standard_E8s_v3, or Standard_D8s_v3</b>.
+For the <b>Mid-Tier server</b>, Start with 4 physical cores with sufficient memory (minimum 40 GB) to support Web Application JVMs, We recommend: <b>Standard_DS13_v2, Standard_E8s_v3, or Standard_D8s_v3</b>.
 
 <a name="ViyaSizing"></a>
 ### SAS Viya Sizing
@@ -135,31 +137,54 @@ For SAS Viya, here are the recommendations:
 
 <b>Microservices Server:</b>
 
-Choose a machine of minimum 8 cores with 60 GB memory for Microservices. Some choices are:
- * Standard_E8s_v3 (or E16s_v3)
- * Standard_DS13_v2 (or DS14_v2)
+Choose a machine with minimum 4 physical cores and 60 GB memory. The recommended instance type is:
+ * Standard_E8s_v3
 
 <b>SPRE Server:</b>
 
-SPRE Server is responsible for the Compute actions in the Viya environment. Choose a machine with a minimum of 8 cores. Viable choices include:
- * Standard_E8s_v3 (or E16s_v3/E32s_v3)
- * Standard_D8s_v3 (or D16s_v3/D32s_v3)
+SPRE Server is responsible for the computational actions in the Viya environment. Choose a machine with a minimum of 8 virtual cores. In general, you should choose the same instance type as you use for the CAS worker below. The recommended instance types are:
+
+|  VCPUS 	  |	Virtual Machine  | SKU	Memory (RAM)  |	Temporary Storage |
+| --------------- | ---------------- | ------------------ | ----------------- |
+|   4             | Standard_E4s_v3  | 32 GB		  |  64 GB            |
+|   8	          |  Standard_E8s_v3 |	64 GB             |  128 GB           |
+|   16	          |  Standard_E16s_v3 |	128 GB            |  256 GB           |
+|   32            |  Standard_E32s_v3 |  256 GB           |  512 GB           |
+|   4             |  Standard_DS12_v2 | 28 GB             |  56 GB            |
+|   8             |  Standard_DS13_v2 | 56 GB             |  112 GB           |
+|   16            |  Standard_DS14_v2 | 112 GB            |  224 GB           |
+
 
 <b>CAS Controller and Workers Nodes:</b>
 
-Here are some recommended example VM sizes based on the number of licensed cores:
-|Licensed Cores	| Virtual Machine | SKU	Memory (RAM) |	Temporary Storage |
-| ------------- | --------------- | ---------------- | ------------------ |
-|   4           | Standard_E8s_v3 | 64 GB	         |  128 GB            |
-|   8           | Standard_E16s_v3|	128 GB           |	256 GB            |
-|   16	        | Standard_E32s_v3|	256 GB	         |  512 GB            |
+For <b>CAS Controller Server</b>, choose from this list for:
 
+|  VCPUS 	  |	Virtual Machine  | SKU	Memory (RAM)  |	Temporary Storage |
+| --------------- | ---------------- | ------------------ | ----------------- |
+|   4             | Standard_E4s_v3  | 32 GB		  |  64 GB            |
+|   8	          |  Standard_E8s_v3 |	64 GB             |  128 GB           |
+|   16	          |  Standard_E16s_v3 |	128 GB            |  256 GB           |
+|   4             |  Standard_DS12_v2 | 28 GB             |  56 GB            |
+|   8             |  Standard_DS13_v2 | 56 GB             |  112 GB           |
+|   16            |  Standard_DS14_v2 | 112 GB            |  224 GB           |
+
+For <b>CAS Worker Nodes</b>, choose from this list for:
+
+|  VCPUS 	  |	Virtual Machine  | SKU	Memory (RAM)  |	Temporary Storage |
+| --------------- | ---------------- | ------------------ | ----------------- |
+|   4             | Standard_E4s_v3  | 32 GB		  |  64 GB            |
+|   8	            |  Standard_E8s_v3 |	64 GB             |  128 GB           |
+|   16	          |  Standard_E16s_v3 |	128 GB            |  256 GB           |
+|   32            |  Standard_E16s_v3 |  256 GB           |  512 GB           |
+|   4             |  Standard_DS12_v2 | 28 GB             |  56 GB            |
+|   8             |  Standard_DS13_v2 | 56 GB             |  112 GB           |
+|   16            |  Standard_DS14_v2 | 112 GB            |  224 GB           |
 
 <a name="Prerequisites"></a>
 ## Prerequisites
 Before deploying SAS Quickstart Template for Azure, you must have the following:
 
-* Azure user account with Owner permission or Contributor Role and custom roles with below permissions:
+* An Azure user account with Owner permission or Contributor Role and custom roles with below permissions:
     * Microsoft.Authorization/roleAssignments/write
     * */read
     * Microsoft.Authorization/*/read
@@ -167,7 +192,7 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
     * Microsoft.KeyVault/vaults/*/read
 * Sufficient quota for the number of Cores in Azure Account to accommodate all the servers in the SAS 9.4 and SAS Viya ecosystem. Please check your [subscription limits](https://docs.microsoft.com/en-us/answers/questions/10982/where-do-i-see-the-current-azure-vm-quota-limits-f.html) before launching the QuickStart.  You can request an increase in standard vCPU quota limits per VM series from [Microsoft support](https://docs.microsoft.com/en-us/azure/azure-portal/supportability/per-vm-quota-requests). 
 * A resource group that does not already contain a Quickstart deployment. For more information, see [Resource groups](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
-* All the Server types you select must support [Accelerated Networking](https://azure.microsoft.com/en-us/updates/accelerated-networking-in-expanded-preview/) and [Premium Storage](https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#premium-ssd)
+* All the Server types you select must support [Accelerated Networking](https://docs.microsoft.com/en-us/azure/virtual-network/create-vm-accelerated-networking-cli) and [Premium Storage](https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#premium-ssd)
 * You would need AzureKeyVault Owner ID and SSH Public key to be provided in the parameters at the time of deployment. Follow the instructions on 
     * To Get the AzureKeyVault OwnerID, run the below command in the Azure Powershell.
     
@@ -175,7 +200,7 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
 	
     * How to [Generate the SSH Public key](https://www.ssh.com/ssh/putty/windows/puttygen)
 * A SAS Software Order Confirmation Email that contains supported Quickstart products.
-    The license file {emailed from SAS as `SAS_Viya_deployment_data.zip`} which describes your SAS Software Order. SAS 9.4 software order details required to download the sasdepot.
+    The license file {emailed from SAS as `SAS_Viya_deployment_data.zip`} which describes your SAS Viya Software Order and SAS 9.4 software order details required to download the sasdepot.
 
 <a name="Download"></a>
 ### Download SAS Software for 9.4 and Viya
@@ -187,8 +212,6 @@ Before deploying SAS Quickstart Template for Azure, you must have the following:
 
 		mirrormgr  mirror  --deployment-data  <path-to-SAS_Viya_deployment_data>.zip --path <location-of-mirror-repository> --log-file mirrormgr.log --platform 64-redhat-linux-6  --latest
  
-
-
 <a name="Upload"></a>
 ### Upload the SAS Software to an Azure File Share
 The QuickStart deployment requires parameters related to the license file and SAS Depot Location, which will be available once you upload the SAS 9.4 and Viya Depot and License files to Azure File Share.
@@ -249,10 +272,10 @@ Below is the list of the Parameters that would require to be filled during the d
 |   Vnet Public Subnet CIDR	        |   Default: 10.10.1.0/24	|   The CIDR block for the Ansible Controller/Bastion Host Public Subnet. |
 |   SAS9.4 Private Subnet CIDR	    |   Default: 10.10.2.0/24	|   The CIDR block for the first private subnet where the SAS 9.4 and RDP machines will be deployed.  |
 |   Viya Private Subnet CIDR	    |   Default: 10.10.3.0/24	    |   The CIDR block for the second private subnet where the SAS Viya machines will be deployed.      |
-|   SAS9.4 Meta VM Size	            |   Required Input<br>Default: Standard_D4s_v3	|   VM Type for SAS Metadata Server.    |
+|   SAS9.4 Meta VM Size	            |   Required Input<br>Default: Standard_D8s_v3	|   VM Type for SAS Metadata Server.    |
 |   SAS9.4 Mid VM Size	            |   Required Input<br>Default: Standard_E8s_v3  |	VM Type for SAS Mid VM Server.      |
 |   SAS9.4 Compute VM Size	        |   Required Input<br>Default: Standard_E8s_v3	|   VM Type for SAS Compute Server.     |
-|   Viya Microservices VM Size	    |   Required Input<br>Default: Standard_E16s_v3	    |   VM Type for SAS Viya Microservices Server.  |
+|   Viya Microservices VM Size	    |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya Microservices Server.  |
 |   Viya SPRE VM Size	            |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya SPRE Server.       |
 |   Viya CAS Controller VM Size	    |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya CAS Controller Server. |
 |   Viya CAS Worker VM Size	        |   Required Input<br>Default: Standard_E8s_v3	    |   VM Type for SAS Viya CAS Worker Nodes.  |
@@ -330,13 +353,13 @@ Here are some of the Key Locations and files that are useful for troubleshooting
 #### SAS 9.4 Environment
 |Directory Name |	Description/Purpose |	Location |
 | ------------- | ---------------------------- | ------------------------- |
-| RESPONSEFILES	| Location of Response files involved in SAS Deployment.  |	/opt/sas/resources/responsefiles |
-| SASDEPLOYMENT	| Location of SAS deployment. SAS Home and SAS Config directories reside here. |	/opt/sas/ | 
-| SASDEPOT	| Location of SAS Depot. |	/sasdepot (mounted as Azure file share in all Servers) |
-| SASDATA	| Location of SAS data, projects, source code, and applications. |	/sasdata |
-| SASWORK/SASUTIL |	Location of SAS workspace and temporary scratch area. This area will predominantly be used for transient and volatile data and technically emptied after the completion of job processing. |	<b>Compute Server:</b> /saswork |
-| SASBACKUP |	Location for SAS Backup and Recovery Tool backup vault. |	/opt/sas/backups |
-| DEPLOYMENTLOGS	| Location for Deployment Logs. Contains the logs for all phase-wise execution of Pre-Reqs, Install, Config, and Post Deployment scripts. |	/var/log/sas/install/ |
+| RESPONSE FILES	| Location of Response files involved in SAS Deployment.  |	/opt/sas/resources/responsefiles |
+| SAS DEPLOYMENT	| Location of SAS deployment. SAS Home and SAS Config directories reside here. |	/opt/sas/ | 
+| SAS DEPOT	| Location of SAS Depot. |	/sasdepot (mounted as Azure file share in all Servers) |
+| SAS DATA	| Location of SAS data, projects, source code, and applications. |	/sasdata |
+| SAS WORK/SASUTIL |	Location of SAS workspace and temporary scratch area. This area will predominantly be used for transient and volatile data and technically emptied after the completion of job processing. |	<b>Compute Server:</b> /saswork |
+| SAS BACKUP |	Location for SAS Backup and Recovery Tool backup vault. |	/opt/sas/backups |
+| DEPLOYMENT LOGS	| Location for Deployment Logs. Contains the logs for all phase-wise execution of Pre-Reqs, Install, Config, and Post Deployment scripts. |	/var/log/sas/install/ |
 #### SAS Viya Environment
 | Directory Name	|   Description/Purpose	          |   Location/Size           |
 | -------------     | ------------------------------- | ------------------------- |
@@ -402,42 +425,11 @@ ansible-playbook viya-ark/playbooks/viya-mmsu/viya-services-restart.yml -e enabl
 <a name="appendix"></a>
 ## Appendix
 <a name="idservices"></a>
-### Appendix A: Configuring Identities Service
-#### Verify Security Settings
-Ensure that the correct port on your Lightweight Directory Access Protocol (LDAP) or secure LDAP (LDAPS) machine can be accessed by the SAS Viya machines:
-* Port 389 if using LDAP
-* Port 636 if using secure LDAP (LDAPS). 
-#### Create a Service Account	
-Create a service account in your LDAP system. The service account must have permission to read the users and groups that will log on to the system.
-Configure the Identities Service
-See [Configure the Connection to Your Identity Provider in the SAS Viya for Linux: Deployment Guide](https://documentation.sas.com/?docsetId=dplyml0phy0lax&docsetTarget=p0dt267jhkqh3un178jzupyyetsa.htm&docsetVersion=3.5&locale=en#n1p4yydj6grbban1kl1te52gv0kf) for more information about configuring the identities service.
-
-In the SAS Environment Manager, on the Configuration tab, select the Identities service. There are three sections to configure: <b>connection, user, and group</b>.
-##### Connection:
-    * host - the DNS address or IP address of your LDAP machine.
-    * password - the password of the service account that SAS Viya will use to connect to your LDAP machine.
-    * port - the port your LDAP server uses.
-    * userDN - the DN of the LDAP service account.
-##### User:
-    * accountID - the parameter used for the username. This can be uid, samAccountName, or name depending on your system.
-    * baseDN - DN to search for users under.
-##### Group:
-    * accountID - the parameter used for the name of the group.
-    * baseDN - DN to search for groups under Set the default values to work with a standard Microsoft Active Directory system.
-#### Verify the Configuration
-Log in to SAS Viya with your LDAP accounts. You might need to restart SAS Viya for the LDAP changes to take effect.
-
-Run the ldapsearch command from one of the SAS Viya machines.
-
-`ldapsearch -x -h <YOUR LDAP HOST> -b <YOUR DN> -D <YOUR LDAP SERVICE ACCOUNT> -W`
-
-Enter the password to your LDAP service account. If verification is successful, the list of your users and groups is displayed.
-
 #### Configure PAM for SAS Studio
 Because SAS Studio does not use the SAS Logon Manager, it has different requirements for integration with an LDAP system. SAS Studio manages authentication through a pluggable authentication module (PAM). You can use System Security Services Daemon (SSSD) to integrate the PAM configuration on your services machine with your LDAP system. To access SAS Studio, the following conditions must be met:
 
 <a name="sshtunneling"></a>
-### Appendix B: SSH Tunneling
+### Appendix A: SSH Tunneling
 Port forwarding via SSH (SSH tunneling) creates a secure connection between your local computer and a remote machine through which services can be accessed.
 ##### Step 1
 In your PuTTY configuration, configure the Public IP address and Port of your Ansible-Controller/Bastion Host Server. Ansible Controller IP and user details will be available in deployment output in the Azure portal
@@ -471,7 +463,7 @@ Open an RDP connection and enter your local IP (127.0.0.1), along with the local
 ![](Images/rdp_connection.jpg)
 
 <a name="security"></a>
-## Appendix C: Security Considerations
+## Appendix B: Security Considerations
 #### Network Security Groups
 SAS Quickstart for Azure uses the following network security groups to control access to the servers from sources outside the virtual network. All server to server communication between subnets in the SAS  virtual network is permitted.
 

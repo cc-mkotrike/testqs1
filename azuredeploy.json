@@ -30,13 +30,6 @@
                 "description": "Virtual Network Public Subnet CIDR, ex. 10.10.1.0/24 which should allign with VNET CIDR"
             }
         },
-        "ApplicationGateway PublicSubnet CIDR": {
-            "defaultValue": "10.10.4.0/24",
-            "type": "String",
-            "metadata": {
-                "description": "Virtual Network Public Subnet CIDR, ex. 10.10.1.0/24 which should allign with VNET CIDR"
-            }
-        },
         "SAS94 PrivateSubnet CIDR": {
             "defaultValue": "10.10.2.0/24",
             "type": "String",
@@ -45,7 +38,7 @@
             }
         },
         "SAS94 Meta VM Size": {
-            "defaultValue": "Standard_E4s_v3",
+            "defaultValue": "Standard_D4s_v3",
             "type": "String",
             "metadata": {
                 "description": "This is the SKU for the Meta VM.The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
@@ -76,7 +69,7 @@
         },
         "SAS External Password": {
             "minLength": 12,
-            "maxLength": 14,
+            "maxLength": 16,
             "type": "SecureString",
             "metadata": {
                 "description": "Password for RDP login & SAS admin account in SAS servers"
@@ -84,7 +77,7 @@
         },
         "SAS Internal Password": {
             "minLength": 8,
-            "maxLength": 15,
+            "maxLength": 16,
             "type": "SecureString",
             "metadata": {
                 "description": "Password for SAS Internal Accounts(Metadata & WIP)"
@@ -195,11 +188,11 @@
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
             "metadata": {
-                "description": "Azure Resources location,where all the SAS 94 and Viya reosurce should be created. e.g. servers, disks, ip's etc."
+                "description": "Azure Resources location, where all the SAS 94 and Viya resources should be created. e.g. servers, disks, IP's etc."
             }
         },
         "_artifactsLocation": {
-            "defaultValue": "https://raw.githubusercontent.com/cc-mkotrike/testqs1/develop_v3/",
+            "defaultValue": "https://raw.githubusercontent.com/corecompete/sas94-viya/master/",
             "type": "String",
             "metadata": {
                 "description": "For a standard deployment, keep the default.  The https URL to the base of the deployment files in Microsoft Azure. If a SAS key is needed, please do not include the SAS key in the URL. Instead, add the part after and include the question mark to the _artifactsLocationSasToken variable. ex. https://(STORAGE_ACCOUNT).file.core.windows.net/(SHARE_NAME)/(SUBDIRECTORY_NAME)/"
@@ -209,18 +202,13 @@
     "variables": {
         "_artifactsLocationSasToken": "",
         "access_policy_template": "[concat(parameters('_artifactsLocation'),'nestedtemplates/access_policy.json', variables('_artifactsLocationSasToken'))]",
-        "viya_agw_name": "ViyaApplicationGateway",
-        "agw_pub_nw_interface": "[concat(parameters('SAS Application Name'),'_',variables('viya_agw_name'),'_nic_',variables('resourceGroupUniqueString'))]",
-        "agw_nw_sg": "[concat(parameters('SAS Application Name'),'_',variables('viya_agw_name'),'_nsg_',variables('resourceGroupUniqueString'))]",
-        "AlternateDomain": "[concat(parameters('SAS Application Name'),'viya-',variables('resourceGroupUniqueString'))]",
         "ansible_nw_interface": "[concat(parameters('SAS Application Name'),'_',variables('ansible_vm_name'),'_nic_',variables('resourceGroupUniqueString'))]",
         "ansible_nw_sg": "[concat(parameters('SAS Application Name'),'_',variables('ansible_vm_name'),'_nsg_',variables('resourceGroupUniqueString'))]",
         "ansible_pub_nw_interface": "[concat(parameters('SAS Application Name'),'_',variables('ansible_vm_name'),'_pub_nic_',variables('resourceGroupUniqueString'))]",
         "ansible_ssl_copy_sh": "[concat(parameters('_artifactsLocation'),'scripts/ansible_ssl.sh', variables('_artifactsLocationSasToken'))]",
         "ansible_startup_script_sh": "[concat(parameters('_artifactsLocation'),'scripts/ansible_setup.sh', variables('_artifactsLocationSasToken'))]",
         "ansible_vm_name": "ansible",
-        "ansible_vm_size": "Standard_DS4_v2",
-        "app_gw_script_sh": "[concat(parameters('_artifactsLocation'),'scripts/agw_ssl.sh', variables('_artifactsLocationSasToken'))]",
+        "ansible_vm_size": "Standard_DS2_v2",
         "cascontroller_nw_interface": "[concat(parameters('SAS Application Name'),'_',variables('cascontroller_vm_name'),'_nic_',variables('resourceGroupUniqueString'))]",
         "cascontroller_nw_sg": "[concat(parameters('SAS Application Name'),'_',variables('cascontroller_vm_name'),'_nsg_',variables('resourceGroupUniqueString'))]",
         "cascontroller_vm_name": "cascontroller",
@@ -240,7 +228,6 @@
         "custom_data_sas": "#cloud-config\n mounts:\n   - [ ephemeral0, /saswork]",
         "diagnostic_storagegroup_name": "[toLower(concat(parameters('SAS Application Name'),'diag', variables('resourceGroupUniqueString')))]",
         "domain_name": "internal.cloudapp.net",
-        "DomainActual": "[substring(variables('AlternateDomain'),0,if(lessOrEquals(length(variables('AlternateDomain')),60), length(variables('AlternateDomain')), 60))]",
         "enabledForDeployment": true,
         "enabledForDiskEncryption": false,
         "enabledForTemplateDeployment": true,
@@ -303,7 +290,6 @@
         "vnet_pub_subnt": "[concat(parameters('SAS Application Name'),'_vnet_pub1_subnt_',variables('resourceGroupUniqueString'))]",
         "vnet_pvt_subnt": "[concat(parameters('SAS Application Name'), '_vnet_pvt1_subnt_',variables('resourceGroupUniqueString'))]",
         "vnet_viya_pvt_subnt": "[concat(parameters('SAS Application Name'), '_vnet_pvt2_subnt_',variables('resourceGroupUniqueString'))]",
-        "vnet_agw_pub_subnt": "[concat(parameters('SAS Application Name'),'_vnet_pub2_subnt_',variables('resourceGroupUniqueString'))]",
         "windows_extension_template": "[concat(parameters('_artifactsLocation'),'nestedtemplates/vm_windows_extension.json', variables('_artifactsLocationSasToken'))]",
         "sas94vm_tags":{"Application":"[parameters('SAS Application Name')]","Component":"SAS94NonGrid"},
         "sasviyavm_tags":{"Application":"[parameters('SAS Application Name')]","Component":"SASViya"},
@@ -358,16 +344,7 @@
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('pub_sub_nw_sg'))]"
                             }
                         }
-                    },
-                    {
-                        "name": "[variables('vnet_agw_pub_subnt')]",
-                        "properties": {
-                            "addressPrefix": "[parameters('ApplicationGateway PublicSubnet CIDR')]",
-                            "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('agw_nw_sg'))]"
-                            }
-                        }
-                    }                    
+                    }
                 ],
                 "enableDdosProtection": false,
                 "enableVmProtection": false
@@ -644,163 +621,6 @@
                 }
             }
         },
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2019-09-01",
-            "name": "[variables('ansible_pub_nw_interface')]",
-            "location": "[parameters('location')]",
-            "sku": {
-                "name": "Basic",
-                "tier": "Regional"
-            },
-            "properties": {
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Static",
-                "idleTimeoutInMinutes": 4
-            }
-        },
-        {
-            "comments": "The public IP address for the load balancer. Should be the only public IP outside of the Ansible controller",
-            "type": "Microsoft.Network/publicIPAddresses",
-            "sku": {
-                "name": "Basic",
-                "tier": "Regional"
-            },
-            "name": "[variables('agw_pub_nw_interface')]",
-            "apiVersion": "2019-09-01",
-            "location": "[parameters('location')]",
-            "properties": {
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Dynamic",
-                "idleTimeoutInMinutes": 4,
-                "dnsSettings": {
-                "domainNameLabel": "[variables('DomainActual')]"
-                }
-            }
-        },
-        {
-      "comments": "The primary network security group of the Ansible controller",
-      "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[variables('agw_nw_sg')]",
-      "apiVersion": "2019-09-01",
-      "location": "[parameters('location')]",
-      "properties": {
-        "securityRules": [
-          {
-            "name": "allow-https",
-            "properties": {
-              "protocol": "TCP",
-              "sourcePortRange": "*",
-              "destinationPortRange": "443",
-              "sourceAddressPrefix": "[parameters('Admin Ingress Location')]",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 1000,
-              "direction": "Inbound"
-            }
-          },
-          {
-            "name": "allow-backend-health",
-            "properties": {
-              "protocol": "TCP",
-              "sourcePortRange": "*",
-              "destinationPortRange": "65503-65534",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 1001,
-              "direction": "Inbound"
-            }
-          }
-        ],
-        "defaultSecurityRules": [
-          {
-            "name": "AllowVnetInBound",
-            "properties": {
-              "description": "Allow inbound traffic from all VMs in VNET",
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "*",
-              "sourceAddressPrefix": "VirtualNetwork",
-              "destinationAddressPrefix": "VirtualNetwork",
-              "access": "Allow",
-              "priority": 65000,
-              "direction": "Inbound"
-            }
-          },
-          {
-            "name": "AllowAzureLoadBalancerInBound",
-            "properties": {
-              "description": "Allow inbound traffic from the Microsoft Azure load balancer",
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "*",
-              "sourceAddressPrefix": "AzureLoadBalancer",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 65001,
-              "direction": "Inbound"
-            }
-          },
-          {
-            "name": "DenyAllInBound",
-            "properties": {
-              "description": "Deny all inbound traffic",
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "*",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Deny",
-              "priority": 65500,
-              "direction": "Inbound"
-            }
-          },
-          {
-            "name": "AllowVnetOutBound",
-            "properties": {
-              "description": "Allow outbound traffic from all VMs to all VMs in VNET",
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "*",
-              "sourceAddressPrefix": "VirtualNetwork",
-              "destinationAddressPrefix": "VirtualNetwork",
-              "access": "Allow",
-              "priority": 65000,
-              "direction": "Outbound"
-            }
-          },
-          {
-            "name": "AllowInternetOutBound",
-            "properties": {
-              "description": "Allow outbound traffic from all VMs to the Internet",
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "*",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "Internet",
-              "access": "Allow",
-              "priority": 65001,
-              "direction": "Outbound"
-            }
-          },
-          {
-            "name": "DenyAllOutBound",
-            "properties": {
-              "description": "Deny all outbound traffic",
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "*",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Deny",
-              "priority": 65500,
-              "direction": "Outbound"
-            }
-          }
-        ]
-      }
-    },
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-09-01",
@@ -1536,147 +1356,20 @@
             }
         },
         {
-      "comments": "The primary application gateway for the SAS Viya Quickstart.",
-      "type": "Microsoft.Network/applicationGateways",
-      "name": "[variables('viya_agw_name')]",
-      "apiVersion": "2019-09-01",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', variables('microservices_nw_interface'))]",
-        "[resourceId('Microsoft.Compute/virtualMachines', variables('microservices_vm_name'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]",
-        "[resourceId('Microsoft.Resources/deployments','Phase6-GetAGWCACert')]"
-      ],
-      "properties": {
-        "sku": {
-          "name": "Standard_Small",
-          "tier": "Standard",
-          "capacity": 1
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2019-09-01",
+            "name": "[variables('ansible_pub_nw_interface')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Basic",
+                "tier": "Regional"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4
+            }
         },
-        "sslPolicy": {
-          "policyType": "Custom",
-          "cipherSuites": [
-            "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
-            "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-            "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
-            "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
-          ],
-          "minProtocolVersion": "TLSv1_2"
-        },
-        "gatewayIPConfigurations": [
-          {
-            "name": "appGatewayIpConfig",
-            "properties": {
-              "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), variables('vnet_agw_pub_subnt'))]"
-              }
-            }
-          }
-        ],
-        "sslCertificates": [
-          {
-            "name": "appGatewayFrontendCertificate",
-            "properties": {
-              "data": "[json(concat(split(reference('Phase4-GetAGWCertPart1').outputs.instanceView.value.statuses[0].message, '#DATA#')[1],split(reference('Phase5-GetAGWCertPart2').outputs.instanceView.value.statuses[0].message, '#DATA#')[1])).data]",
-              "password": "[json(concat(split(reference('Phase4-GetAGWCertPart1').outputs.instanceView.value.statuses[0].message, '#DATA#')[1],split(reference('Phase5-GetAGWCertPart2').outputs.instanceView.value.statuses[0].message, '#DATA#')[1])).password]"
-            }
-          }
-        ],
-        "authenticationCertificates": [
-          {
-            "name": "viya-ca.cer",
-            "properties": {
-              "data": "[split(reference('Phase6-GetAGWCACert').outputs.instanceView.value.statuses[0].message, '#DATA#')[1]]"
-            }
-          }
-        ],
-        "frontendIPConfigurations": [
-          {
-            "name": "appGatewayFrontendIP",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface'))]"
-              }
-            }
-          }
-        ],
-        "frontendPorts": [
-          {
-            "name": "appGatewayFrontendPort",
-            "properties": {
-              "port": 443
-            }
-          }
-        ],
-        "backendAddressPools": [
-          {
-            "name": "appGatewayBackendPool",
-            "properties": {
-              "backendAddresses": [
-                {
-                  "IpAddress": "[reference(resourceId('Microsoft.Network/networkInterfaces', variables('microservices_nw_interface'))).ipConfigurations[0].properties.privateIPAddress]"
-                }
-              ]
-            }
-          }
-        ],
-        "backendHttpSettingsCollection": [
-          {
-            "name": "appGatewayBackendHttpSettings",
-            "properties": {
-              "port": 443,
-              "protocol": "Https",
-              "cookieBasedAffinity": "Disabled",
-              "pickHostNameFromBackendAddress": false,
-              "requestTimeout": 30000,
-              "authenticationCertificates": [
-                {
-                  "id": "[resourceId('Microsoft.Network/applicationGateways/authenticationCertificates', variables('viya_agw_name'), 'viya-ca.cer')]"
-                }
-              ]
-            }
-          }
-        ],
-        "httpListeners": [
-          {
-            "name": "appGatewayHttpListener",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', variables('viya_agw_name'), 'appGatewayFrontendIP')]"
-              },
-              "frontendPort": {
-                "id": "[resourceId('Microsoft.Network/applicationGateways/frontendPorts', variables('viya_agw_name'), 'appGatewayFrontendPort')]"
-              },
-              "protocol": "Https",
-              "sslCertificate": {
-                "id": "[resourceId('Microsoft.Network/applicationGateways/sslCertificates', variables('viya_agw_name'), 'appGatewayFrontendCertificate')]"
-              },
-              "requireServerNameIndication": false
-            }
-          }
-        ],
-        "requestRoutingRules": [
-          {
-            "name": "rule1",
-            "properties": {
-              "ruleType": "Basic",
-              "httpListener": {
-                "id": "[resourceId('Microsoft.Network/applicationGateways/httpListeners', variables('viya_agw_name'), 'appGatewayHttpListener')]"
-              },
-              "backendAddressPool": {
-                "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', variables('viya_agw_name'), 'appGatewayBackendPool')]"
-              },
-              "backendHttpSettings": {
-                "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', variables('viya_agw_name'), 'appGatewayBackendHttpSettings')]"
-              }
-            }
-          }
-        ],
-        "enableHttp2": true
-      }
-    },
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-09-01",
@@ -1869,7 +1562,7 @@
                         "value": "[variables('ansible_vm_name')]"
                     },
                     "commandToExecute": {
-                        "value": "[concat('mkdir -p /var/log/sas/install && set -o pipefail; ./ansible_setup.sh',' ',parameters('storage account name'),' ',parameters('file share name'),' ',parameters('viyarepo folder'),' ',parameters('SAS Application Name'),' ',variables('domain_name'),' ',variables('ansible_vm_name'),' ',variables('microservices_vm_name'),' ',variables('cascontroller_vm_name'),' ',variables('spre_vm_name'),' ',variables('casworker_vm_name'),' ',variables('key_vault_secretname_sasinst'),' ',variables('key_vault_secretname_sasext'),' ',variables('key_vault_name'),' ',variables('key_vault_secretname_pvtkey'),' ',variables('key_vault_secretname_pubkey'),' ',parameters('Number Of Viya CAS Nodes'),' ',variables('mid_vm_name'),' ',parameters('_artifactsLocation'),' ',variables('compute_vm_name'),' ',variables('meta_vm_name'),' ',variables('key_vault_secretname_stgacc'),' ',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,' ','2>&1 | tee /var/log/sas/install/runPhase1_HostSetup.log')]"
+                        "value": "[concat('mkdir -p /var/log/sas/install && set -o pipefail; ./ansible_setup.sh',' ',parameters('storage account name'),' ',parameters('file share name'),' ',parameters('viyarepo folder'),' ',parameters('SAS Application Name'),' ',variables('domain_name'),' ',variables('ansible_vm_name'),' ',variables('microservices_vm_name'),' ',variables('cascontroller_vm_name'),' ',variables('spre_vm_name'),' ',variables('casworker_vm_name'),' ',variables('key_vault_secretname_sasinst'),' ',variables('key_vault_secretname_sasext'),' ',variables('key_vault_name'),' ',variables('key_vault_secretname_pvtkey'),' ',variables('key_vault_secretname_pubkey'),' ',parameters('Number Of Viya CAS Nodes'),' ',variables('mid_vm_name'),' ',parameters('_artifactsLocation'),' ',variables('compute_vm_name'),' ',variables('meta_vm_name'),' ',variables('key_vault_secretname_stgacc'),' ','2>&1 | tee /var/log/sas/install/runPhase1_HostSetup.log')]"
                     },
                     "_artifactsLocation": {
                         "value": "[variables('ansible_startup_script_sh')]"
@@ -1918,12 +1611,13 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "Phase3-AppGatewaySSL",
+            "name": "Phase3-ViyaInstallpart1",
             "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'Phase1-AnsibleHostSetup')]",
                 "[resourceId('Microsoft.Resources/deployments', 'Phase2-MicroServicesViyaARK')]",
-				"[resourceId('Microsoft.Resources/deployments', 'Phase2-SpreViyaARK')]",
-				"[resourceId('Microsoft.Resources/deployments', 'Phase2-CASControllerViyaARK')]",
-				"casworkerviyaarkcopy" 
+                "[resourceId('Microsoft.Resources/deployments', 'Phase2-SpreViyaARK')]",
+                "[resourceId('Microsoft.Resources/deployments', 'Phase2-CASControllerViyaARK')]",
+                "casworkerviyaarkcopy"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -1938,131 +1632,7 @@
                         "value": "[variables('ansible_vm_name')]"
                     },
                     "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./agw_ssl.sh',' ', '1',' ','2>&1 | tee /var/log/sas/install/runPhase3_appgwssl.log')]"
-                    },
-                    "_artifactsLocation": {
-                        "value": "[variables('app_gw_script_sh')]"
-                    },
-                    "_artifactsLocationSasToken": {
-                        "value": "[variables('_artifactsLocationSasToken')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "Phase4-GetAGWCertPart1",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments','Phase3-AppGatewaySSL')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('linux_extension_template')]"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "vmName": {
-                        "value": "[variables('ansible_vm_name')]"
-                    },
-                    "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./agw_ssl.sh',' ', '2',' ','2>&1 | tee /var/log/sas/install/runPhase4_CertificateExport_1.log')]"
-                    },
-                    "_artifactsLocation": {
-                        "value": "[variables('app_gw_script_sh')]"
-                    },
-                    "_artifactsLocationSasToken": {
-                        "value": "[variables('_artifactsLocationSasToken')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "Phase5-GetAGWCertPart2",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments','Phase4-GetAGWCertPart1')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('linux_extension_template')]"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "vmName": {
-                        "value": "[variables('ansible_vm_name')]"
-                    },
-                    "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./agw_ssl.sh',' ', '3',' ','2>&1 | tee /var/log/sas/install/runPhase5_CertificateExport_2.log')]"
-                    },
-                    "_artifactsLocation": {
-                        "value": "[variables('app_gw_script_sh')]"
-                    },
-                    "_artifactsLocationSasToken": {
-                        "value": "[variables('_artifactsLocationSasToken')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "Phase6-GetAGWCACert",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments','Phase5-GetAGWCertPart2')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('linux_extension_template')]"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "vmName": {
-                        "value": "[variables('ansible_vm_name')]"
-                    },
-                    "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./agw_ssl.sh',' ', '4',' ','2>&1 | tee /var/log/sas/install/runPhase6_SAS_CA_CRT.log')]"
-                    },
-                    "_artifactsLocation": {
-                        "value": "[variables('app_gw_script_sh')]"
-                    },
-                    "_artifactsLocationSasToken": {
-                        "value": "[variables('_artifactsLocationSasToken')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "Phase7-ViyaInstallpart1",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'Phase6-GetAGWCACert')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('linux_extension_template')]"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "vmName": {
-                        "value": "[variables('ansible_vm_name')]"
-                    },
-                    "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '1',' ','2>&1 | tee /var/log/sas/install/runPhase7_viyainstallpart1.log')]"
+                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '1',' ','2>&1 | tee /var/log/sas/install/runPhase3_viyainstallpart1.log')]"
                     },
                     "_artifactsLocation": {
                         "value": "[variables('viya_install_sh')]"
@@ -2076,9 +1646,9 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "Phase8-ViyaInstallpart2",
+            "name": "Phase4-ViyaInstallpart2",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'Phase7-ViyaInstallpart1')]"
+                "[resourceId('Microsoft.Resources/deployments', 'Phase3-ViyaInstallpart1')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -2093,7 +1663,7 @@
                         "value": "[variables('ansible_vm_name')]"
                     },
                     "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '2',' ','2>&1 | tee /var/log/sas/install/runPhase8_viyainstallpart2.log')]"
+                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '2',' ','2>&1 | tee /var/log/sas/install/runPhase4_viyainstallpart2.log')]"
                     },
                     "_artifactsLocation": {
                         "value": "[variables('viya_install_sh')]"
@@ -2107,9 +1677,9 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "Phase9-ViyaInstallpart3",
+            "name": "Phase5-ViyaInstallpart3",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'Phase8-ViyaInstallpart2')]"
+                "[resourceId('Microsoft.Resources/deployments', 'Phase4-ViyaInstallpart2')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -2124,7 +1694,7 @@
                         "value": "[variables('ansible_vm_name')]"
                     },
                     "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '3',' ','2>&1 | tee /var/log/sas/install/runPhase9_viyainstallpart3.log')]"
+                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '3',' ','2>&1 | tee /var/log/sas/install/runPhase5_viyainstallpart3.log')]"
                     },
                     "_artifactsLocation": {
                         "value": "[variables('viya_install_sh')]"
@@ -2138,9 +1708,9 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "Phase10-ViyaPostInstall",
+            "name": "Phase6-ViyaPostInstall",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'Phase9-ViyaInstallpart3')]"
+                "[resourceId('Microsoft.Resources/deployments', 'Phase5-ViyaInstallpart3')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -2155,7 +1725,7 @@
                         "value": "[variables('ansible_vm_name')]"
                     },
                     "commandToExecute": {
-                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '4',' ','2>&1 | tee /var/log/sas/install/runPhase10_viyapostinstall.log')]"
+                        "value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '4',' ','2>&1 | tee /var/log/sas/install/runPhase6_viyapostinstall.log')]"
                     },
                     "_artifactsLocation": {
                         "value": "[variables('viya_install_sh')]"
@@ -2415,7 +1985,8 @@
             "name": "MetaAccessPolicy",
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/virtualMachines', variables('meta_vm_name'))]",
-                "[resourceId('Microsoft.KeyVault/vaults', variables('key_vault_name'))]"
+                "[resourceId('Microsoft.KeyVault/vaults', variables('key_vault_name'))]",
+                "[resourceID('Microsoft.Resources/deployments','AnsibleAccessPolicy')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -3527,8 +3098,8 @@
             "apiVersion": "2019-10-01",
             "name": "Phase2-SpreViyaARK",
             "dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments','Phase1-SpreHostSetup')]",
-				"[resourceId('Microsoft.Resources/deployments', 'Phase1-AnsibleHostSetup')]"
+                "[resourceId('Microsoft.Resources/deployments','Phase1-SpreHostSetup')]",
+                "[resourceId('Microsoft.Resources/deployments', 'Phase1-AnsibleHostSetup')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -3771,8 +3342,8 @@
             "apiVersion": "2019-10-01",
             "name": "Phase2-CASControllerViyaARK",
             "dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'Phase1-CASControllerHostSetup')]",
-				"[resourceId('Microsoft.Resources/deployments', 'Phase1-AnsibleHostSetup')]"
+                "[resourceId('Microsoft.Resources/deployments', 'Phase1-CASControllerHostSetup')]",
+                "[resourceId('Microsoft.Resources/deployments', 'Phase1-AnsibleHostSetup')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -3988,7 +3559,7 @@
             "name": "[concat('Phase1-',variables('casworker_vm_name'), copyIndex(),'Hostsetup')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/virtualMachines', concat(variables('casworker_vm_name'), copyIndex()))]",
-                "[resourceId('Microsoft.Resources/deployments', concat(variables('casworker_vm_name'), copyIndex(),'accesspolicy') )]"
+                "casworkerpolicycopy"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -4078,15 +3649,15 @@
         },
         "SAS Drive": {
             "type": "String",
-            "value": "[concat('https://',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,'/SASDrive')]"
+            "value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASDrive')]"
         },
         "SAS Studio": {
             "type": "String",
-            "value": "[concat('https://',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,'/SASStudio')]"
+            "value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASStudioV')]"
         },
        "SAS Viya Logon": {
             "type": "String",
-            "value": "[concat('https://',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,'/SASLogon/reset_password?code=',json(split(reference('Phase10-ViyaPostInstall').outputs.instanceView.value.statuses[0].message, '#SASBOOT#')[1]).SAS_BOOT)]"
+            "value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASLogon/reset_password?code=',json(split(reference('Phase6-ViyaPostInstall').outputs.instanceView.value.statuses[0].message, '#SASBOOT#')[1]).SAS_BOOT)]"
         }
     }
 }

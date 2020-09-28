@@ -8,7 +8,7 @@ app_name=`facter app_name`
 domain_name=`facter domain_name`
 microservices_vm_name=`facter microservices_vmname`
 microservice_host=$app_name$microservices_vm_name.$domain_name
-user=root
+user=`whoami`
 spre_vm_name=`facter spre_vmname`
 spre_host=$app_name$spre_vm_name.$domain_name
 cascontroller_vm_name=`facter cascontroller_vmname`
@@ -20,6 +20,8 @@ ansible_directory="/sas/install"
 playbook_directory="$ansible_directory/sas_viya_playbook"
 inventory="$playbook_directory/inventory.ini"
 viyarepo_loc=`facter viyarepo_folder`
+artifact_loc=`facter artifact_loc`
+viya_ark_uri=${artifact_loc}viya-ark.tar.gz
 
 if [[ -z "$SCRIPT_PHASE" ]]; then
         SCRIPT_PHASE="$1"
@@ -95,21 +97,8 @@ done
 sed -i "/\[sas_casserver_primary\]/{n;s/.*/$cascontroller_vm_name/}" $inventory
 sed -i "/\[sas_casserver_worker\]/r caswork.txt" $inventory
 sed -i "/\[ComputeServer\]/{n;s/.*/$spre_vm_name/}" $inventory
-#sed -i "/\[ComputeServices\]/{n;s/.*/$spre_vm_name/}" $inventory
+sed -i "/\[Operations\]/{n;s/.*/$spre_vm_name/}" $inventory
 sed -i "/\[programming\]/{n;s/.*/$spre_vm_name/}" $inventory
-
-#Only for internal purpose(corecompete)
-sed -i "/\[elasticsearch\]/{n;s/.*//}" $inventory
-sed -i "/\[espServer\]/{n;s/.*//}" $inventory
-sed -i "/\[espStreamviewer\]/{n;s/.*//}" $inventory
-sed -i "/\[espStudio\]/{n;s/.*//}" $inventory
-sed -i "/\[sviconfig\]/{n;s/.*//}" $inventory
-sed -i "/\[viprCommon\]/{n;s/.*//}" $inventory
-sed -i "/\[viprESM\]/{n;s/.*//}" $inventory
-sed -i "/\[viprEntity\]/{n;s/.*//}" $inventory
-sed -i "/\[viprVi\]/{n;s/.*//}" $inventory
-sed -i "/\[viprVsd\]/{n;s/.*//}" $inventory
-sed -i "/\[viprSand\]/{n;s/.*//}" $inventory
 
 cat <<EOF >> caswork.txt
 $spre_vm_name
@@ -134,7 +123,9 @@ elif [[ "$SCRIPT_PHASE" -eq 3 ]]; then
         cd $playbook_directory && ansible-playbook site.yml -i inventory.ini -vvv
 
 elif [[ "$SCRIPT_PHASE" -eq 4 ]]; then
-
+        wget $viya_ark_uri
+        mkdir -p $playbook_directory/viya-ark
+        tar -xzvf viya-ark.tar.gz -C $playbook_directory/viya-ark/
         ssh -tT $user@${spre_host} << EOF
 echo "export SASMAKEHOMEDIR=1"     >> /opt/sas/viya/config/etc/spawner/default/spawner_usermods.sh
 echo "export SASHOMEDIRPERMS=0700" >> /opt/sas/viya/config/etc/spawner/default/spawner_usermods.sh
@@ -158,6 +149,9 @@ do
 /opt/sas/viya/home/bin/sas-bootstrap-config --token-file /opt/sas/viya/config/etc/SASSecurityCertificateFramework/tokens/consul/default/client.token kv write config/launcher-server/global/environment/SASHOMEDIRPERMS 0700
 EOF
 done
-echo "#DATA#"
 echo `ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
+sasboot=`ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
+echo "{'SAS_BOOT': '$sasboot'}" > /var/log/sas/install/sasboot.log
+echo "#SASBOOT#"
+cat /var/log/sas/install/sasboot.log
 fi
