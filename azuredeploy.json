@@ -364,7 +364,16 @@
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('pub_sub_nw_sg'))]"
 							}
 						}
-					}
+					},
+                    {
+                        "name": "[variables('vnet_agw_pub_subnt')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('ApplicationGateway PublicSubnet CIDR')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('agw_nw_sg'))]"
+                            }
+                        }
+                    }
 				],
 				"enableDdosProtection": false,
 				"enableVmProtection": false
