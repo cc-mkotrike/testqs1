@@ -3809,7 +3809,7 @@
 		{
 			"type": "Microsoft.Network/networkInterfaces",
 			"apiVersion": "2019-09-01",
-			"name": "[concat(parameters('SAS Application Name'),'_',variables('casworker_vm_name'),copyIndex(),'_nic_',variables('resourceGroupUniqueString'))]",
+			"name": "[concat(parameters('SAS Application Name'),'_',variables('casworker_vm_name'), copyIndex(1),'_nic_',variables('resourceGroupUniqueString'))]",
 			"location": "[parameters('location')]",
 			"dependsOn": [
 				"[resourceId('Microsoft.Network/networkSecurityGroups', variables('casworker_nw_sg'))]",
@@ -3842,7 +3842,7 @@
 		{
 			"type": "Microsoft.Compute/virtualMachines",
 			"apiVersion": "2019-07-01",
-			"name": "[concat(variables('casworker_vm_name'), copyIndex())]",
+			"name": "[concat(variables('casworker_vm_name'),  copyIndex(1))]",
 			"location": "[parameters('location')]",
 			"tags": "[variables('sasviyavm_tags')]",
 			"dependsOn": [
@@ -3864,7 +3864,7 @@
 					},
 					"osDisk": {
 						"osType": "Linux",
-						"name": "[concat(variables('casworker_vm_name'), copyIndex(),'-osdisk')]",
+						"name": "[concat(variables('casworker_vm_name'),  copyIndex(1),'-osdisk')]",
 						"createOption": "FromImage",
 						"caching": "ReadWrite",
 						"managedDisk": {
@@ -3874,13 +3874,13 @@
 					},
 					"dataDisks": [
 						{
-							"name": "[concat(variables('casworker_vm_name'), copyIndex(),'-opt-sas')]",
+							"name": "[concat(variables('casworker_vm_name'),  copyIndex(1),'-opt-sas')]",
 							"diskSizeGB": "[variables('sas_opt_sas_disk_size')]",
 							"lun": 0,
 							"createOption": "Empty"
 						},
 						{
-							"name": "[concat(variables('casworker_vm_name'), copyIndex(),'-sasbackup')]",
+							"name": "[concat(variables('casworker_vm_name'),  copyIndex(1),'-sasbackup')]",
 							"diskSizeGB": "[variables('sas_viya_backup_size')]",
 							"lun": 1,
 							"createOption": "Empty"
@@ -3888,7 +3888,7 @@
 					]
 				},
 				"osProfile": {
-					"computerName": "[concat(variables('casworker_vm_name'), copyIndex())]",
+					"computerName": "[concat(variables('casworker_vm_name'),  copyIndex(1))]",
 					"adminUsername": "[variables('primary_user_name')]",
 					"customData": "[base64(variables('custom_data_cas'))]",
 					"linuxConfiguration": {
@@ -3906,7 +3906,7 @@
 				"networkProfile": {
 					"networkInterfaces": [
 						{
-							"id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SAS Application Name'),'_',variables('casworker_vm_name'),copyIndex(),'_nic_',variables('resourceGroupUniqueString')))]"
+							"id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SAS Application Name'),'_',variables('casworker_vm_name'), copyIndex(1),'_nic_',variables('resourceGroupUniqueString')))]"
 						}
 					]
 				},
@@ -3922,9 +3922,9 @@
 		{
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2019-10-01",
-			"name": "[concat(variables('casworker_vm_name'), copyIndex(),'roleassignment')]",
+			"name": "[concat(variables('casworker_vm_name'),  copyIndex(1),'roleassignment')]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Compute/virtualMachines', concat(variables('casworker_vm_name'), copyIndex()))]"
+				"[resourceId('Microsoft.Compute/virtualMachines', concat(variables('casworker_vm_name'),  copyIndex(1)))]"
 			],
 			"properties": {
 				"mode": "Incremental",
@@ -3933,13 +3933,13 @@
 				},
 				"parameters": {
 					"roleAssignmentName": {
-						"value": "[guid(concat(variables('casworker_vm_name'), copyIndex()),resourceGroup().id)]"
+						"value": "[guid(concat(variables('casworker_vm_name'),  copyIndex(1)),resourceGroup().id)]"
 					},
 					"roleDefinitionID": {
 						"value": "[variables('reader_role')]"
 					},
 					"principalId": {
-						"value": "[reference(resourceId('Microsoft.Compute/virtualMachines',concat(variables('casworker_vm_name'), copyIndex())),'2019-07-01','Full').identity.principalId]"
+						"value": "[reference(resourceId('Microsoft.Compute/virtualMachines',concat(variables('casworker_vm_name'),  copyIndex(1))),'2019-07-01','Full').identity.principalId]"
 					}
 				}
 			},
@@ -3951,9 +3951,9 @@
 		{
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2019-10-01",
-			"name": "[concat(variables('casworker_vm_name'), copyIndex(),'accesspolicy')]",
+			"name": "[concat(variables('casworker_vm_name'),  copyIndex(1),'accesspolicy')]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Compute/virtualMachines', concat(variables('casworker_vm_name'), copyIndex()))]",
+				"[resourceId('Microsoft.Compute/virtualMachines', concat(variables('casworker_vm_name'),  copyIndex(1)))]",
 				"[resourceId('Microsoft.KeyVault/vaults', variables('key_vault_name'))]",
 				"[resourceID('Microsoft.Resources/deployments','SpreAccessPolicy')]"
 			],
@@ -3970,7 +3970,7 @@
 						"value": "[variables('tenantId')]"
 					},
 					"objectId": {
-						"value": "[reference(resourceId('Microsoft.Compute/virtualMachines',concat(variables('casworker_vm_name'), copyIndex())),'2019-07-01','Full').identity.principalId]"
+						"value": "[reference(resourceId('Microsoft.Compute/virtualMachines',concat(variables('casworker_vm_name'),  copyIndex(1))),'2019-07-01','Full').identity.principalId]"
 					},
 					"secretsPermissions": {
 						"value": "[variables('secretsPermissions')]"
@@ -3993,9 +3993,9 @@
 		{
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2019-10-01",
-			"name": "[concat('Phase1-',variables('casworker_vm_name'), copyIndex(),'Hostsetup')]",
+			"name": "[concat('Phase1-',variables('casworker_vm_name'),  copyIndex(1),'Hostsetup')]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Compute/virtualMachines', concat(variables('casworker_vm_name'), copyIndex()))]",
+				"[resourceId('Microsoft.Compute/virtualMachines', concat(variables('casworker_vm_name'),  copyIndex(1)))]",
 				"casworkerpolicycopy"
 			],
 			"properties": {
@@ -4008,7 +4008,7 @@
 						"value": "[parameters('location')]"
 					},
 					"vmName": {
-						"value": "[concat(variables('casworker_vm_name'), copyIndex())]"
+						"value": "[concat(variables('casworker_vm_name'),  copyIndex(1))]"
 					},
 					"commandToExecute": {
 						"value": "[concat('mkdir -p /var/log/sas/install && set -o pipefail; ./viya_prereq.sh',' ',parameters('storage account name'),' ',parameters('file share name'),' ',parameters('file share name'),' ',parameters('SAS Application Name'),' ',variables('domain_name'),' ',variables('ansible_vm_name'),' ',variables('microservices_vm_name'),' ',variables('cascontroller_vm_name'),' ',variables('spre_vm_name'),' ',variables('casworker_vm_name'),' ',variables('key_vault_secretname_sasinst'),' ',variables('key_vault_secretname_sasext'),' ',variables('key_vault_name'),' ',variables('key_vault_secretname_pvtkey'),' ',variables('key_vault_secretname_pubkey'),' ',parameters('Number Of Viya CAS Nodes'),' ',parameters('_artifactsLocation'),' ',variables('key_vault_secretname_stgacc'),' ','2>&1 | tee /var/log/sas/install/runPhase1_HostSetup.log')]"
@@ -4029,9 +4029,9 @@
 		{
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2019-10-01",
-			"name": "[concat('Phase2-',variables('casworker_vm_name'), copyIndex(),'ViyaARK')]",
+			"name": "[concat('Phase2-',variables('casworker_vm_name'),  copyIndex(1),'ViyaARK')]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', concat('Phase1-',variables('casworker_vm_name'), copyIndex(),'Hostsetup'))]",
+				"[resourceId('Microsoft.Resources/deployments', concat('Phase1-',variables('casworker_vm_name'),  copyIndex(1),'Hostsetup'))]",
 				"[resourceId('Microsoft.Resources/deployments', 'Phase1-AnsibleHostSetup')]"
 			],
 			"properties": {
@@ -4044,7 +4044,7 @@
 						"value": "[parameters('location')]"
 					},
 					"vmName": {
-						"value": "[concat(variables('casworker_vm_name'), copyIndex())]"
+						"value": "[concat(variables('casworker_vm_name'),  copyIndex(1))]"
 					},
 					"commandToExecute": {
 						"value": "[concat('set -o pipefail;','./viya_ark.sh 2>&1 | tee /var/log/sas/install/runPhase2_viyaark.log')]"
@@ -4072,10 +4072,6 @@
 			"type": "String",
 			"value": "[reference(resourceId('Microsoft.Network/networkInterfaces',variables('rdp_nw_interface'))).ipConfigurations[0].properties.privateIPAddress]"
 		},
-		"SAS Logon": {
-			"type": "String",
-			"value": "[concat('https://',parameters('SAS Application Name'),variables('mid_vm_name'),'.',variables('domain_name'),':8343/SASLogon')]"
-		},
 		"SASStudio MidTier": {
 			"type": "String",
 			"value": "[concat('https://',parameters('SAS Application Name'),variables('mid_vm_name'),'.',variables('domain_name'),':8343/SASStudio')]"
@@ -4086,15 +4082,15 @@
 		},
 		"SAS Drive": {
 			"type": "String",
-			"value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASDrive')]"
+			"value": "[concat('https://',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,'/SASDrive')]"
 		},
 		"SAS Studio": {
 			"type": "String",
-			"value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASStudioV')]"
+			"value": "[concat('https://',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,'/SASStudioV')]"
 		},
 		"SAS Viya Logon": {
 			"type": "String",
-			"value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASLogon/reset_password?code=',json(split(reference('Phase10-ViyaPostInstall').outputs.instanceView.value.statuses[0].message, '#SASBOOT#')[1]).SAS_BOOT)]"
+			"value": "[concat('https://',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,'/SASLogon/reset_password?code=',json(split(reference('Phase10-ViyaPostInstall').outputs.instanceView.value.statuses[0].message, '#SASBOOT#')[1]).SAS_BOOT)]"
 		}
 	}
 }

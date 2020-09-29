@@ -85,7 +85,8 @@ sed -i "2i$spre_vm_name ansible_host=$spre_host ansible_user=$user ansible_ssh_p
 
 sed -i "3i$cascontroller_vm_name ansible_host=$cas_host ansible_user=$user ansible_ssh_private_key_file=/$user/.ssh/id_rsa consul_bind_adapter=eth0" $inventory
 
-for ((i=0; i < $nodes ; i++))
+#for ((i=0; i < $nodes ; i++))
+for ((i=1;i<=${nodes};i++));
 do
   cat <<EOF >> caswork.txt
 $casworker_vm_name$i
@@ -140,7 +141,8 @@ do
 EOF
 done
 
-for ((i=0; i < $nodes ; i++))
+#for ((i=0; i < $nodes ; i++))
+for ((i=1;i<=${nodes};i++));
 do
         casworker_node=$app_name$casworker_vm_name$i.$domain_name
         ssh -tT $user@$casworker_node << EOF

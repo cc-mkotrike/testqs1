@@ -35,11 +35,12 @@ do
     echo "        DNS.$m = $s" >> all_servers.txt
     let "m+=1"
 done
-for ((i=0; i < $nodes ; i++))
+#for ((i=0; i < $nodes ; i++))
+for ((i=1;i<=${nodes};i++));
 do
     casworker_host=$app_name$casworker_vm_name$i.$domain_name
     echo "$casworker_host" >> hosts.txt
-    n=$(($i+4)) 
+    n=$(($i+3)) 
     echo "        DNS.$n = $casworker_host" >> all_servers.txt
 done
 echo " " >> all_servers.txt
@@ -49,10 +50,11 @@ do
     echo "        IP.$j = `nslookup $s  | grep Address  | awk '{print $2}' | tail -1`" >> all_servers.txt
     let "j+=1"
 done
-for ((i=0; i < $nodes ; i++))
+#for ((i=0; i < $nodes ; i++))
+for ((i=1;i<=${nodes};i++));
 do
     casworker_host=$app_name$casworker_vm_name$i.$domain_name
-    n=$(($i+4))
+    n=$(($i+3))
     echo "        IP.$n = `nslookup $casworker_host  | grep Address  | awk '{print $2}' | tail -1`" >> all_servers.txt
 done
 
