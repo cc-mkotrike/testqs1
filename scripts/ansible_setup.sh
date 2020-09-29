@@ -52,6 +52,7 @@ artifact_loc=${18}
 compute_name=${19}
 meta_name=${20}
 stgacc_secr_name=${21}
+agw_hostname=${22}
 EOF
 
 #Defining variables with facter values
