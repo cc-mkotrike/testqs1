@@ -4085,7 +4085,7 @@
 		},
 		"SAS Viya Logon": {
 			"type": "String",
-			"value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASLogon/reset_password?code=',json(split(reference('Phase6-ViyaPostInstall').outputs.instanceView.value.statuses[0].message, '#SASBOOT#')[1]).SAS_BOOT)]"
+			"value": "[concat('https://',parameters('SAS Application Name'),variables('microservices_vm_name'),'.',variables('domain_name'),'/SASLogon/reset_password?code=',json(split(reference('Phase10-ViyaPostInstall').outputs.instanceView.value.statuses[0].message, '#SASBOOT#')[1]).SAS_BOOT)]"
 		}
 	}
 }
