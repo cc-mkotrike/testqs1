@@ -42,12 +42,12 @@ fi
 cd $playbook_directory && ansible-playbook viya_pre_install_playbook.yml -i pre-install.inventory.ini  -vvv
 #
 #setting the permission SAS working directories
-if [ ! -d /saswork ]; then
+if [ -d "/saswork" ]; then
     chown sas: /saswork     
     chmod 775 /saswork
 fi
 
-if [ ! -d /cascache ]; then
+if [ -d "/cascache" ]; then
        chown sas: /cascache
        chmod 775 /cascache
 fi
