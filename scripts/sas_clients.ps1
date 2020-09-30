@@ -7,7 +7,8 @@ param (
 	[string]$app_name,
 	[string]$mid_name,
 	[string]$domain_name,
-	[string]$artifact_loc,
+    [string]$artifact_loc,
+    [string]$passwd,
 	$code=99
 )
 #Function for Error Handling
@@ -64,3 +65,21 @@ else {
     Write-Host "Install Is Sucess"
  }
 $Path = $env:TEMP; $Installer = "chrome_installer.exe"; Invoke-WebRequest "http://dl.google.com/chrome/install/375.126/chrome_installer.exe" -OutFile $Path\$Installer; Start-Process -FilePath $Path\$Installer -Args "/silent /install" -Verb RunAs -Wait; Remove-Item $Path\$Installer
+
+
+#Install AD DS, DNS and GPMC
+start-job -Name addFeature -ScriptBlock {
+Add-WindowsFeature -Name “ad-domain-services” -IncludeAllSubFeature -IncludeManagementTools
+Add-WindowsFeature -Name “dns” -IncludeAllSubFeature -IncludeManagementTools
+Add-WindowsFeature -Name “gpmc” -IncludeAllSubFeature -IncludeManagementTools }
+Wait-Job -Name addFeature
+#Get-WindowsFeature | Where installed >>$featureLogPath
+
+# Create New Forest, add Domain Controller
+Import-Module ADDSDeployment
+Install-ADDSForest -CreateDnsDelegation:$false `
+-SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "$passwd" -Force) `
+-DomainName $domain_name `
+-InstallDns:$true `
+-NoRebootOnCompletion:$false `
+-Force:$true
