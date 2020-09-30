@@ -2274,7 +2274,7 @@
 						"value": "[variables('rdp_vm_name')]"
 					},
 					"commandToExecute": {
-						"value": "[concat('powershell -ExecutionPolicy Unrestricted -File sas_clients.ps1 ','-stg_acc_name ',parameters('storage account name'),' -stg_key ',parameters('storage account key'),' -file_share_name ',parameters('file share name'),' -depot_folder_name ',parameters('sasdepot folder'),' -clients_sid ',parameters('SAS Server license file'),' -app_name ',parameters('SAS Application Name'),' -mid_name ',variables('mid_vm_name'),' -domain_name ',variables('domain_name'),' -artifact_loc ',parameters('_artifactsLocation'),'-passwd',parameters('SAS External Password'))]"
+						"value": "[concat('powershell -ExecutionPolicy Unrestricted -File sas_clients.ps1 ','-stg_acc_name ',parameters('storage account name'),' -stg_key ',parameters('storage account key'),' -file_share_name ',parameters('file share name'),' -depot_folder_name ',parameters('sasdepot folder'),' -clients_sid ',parameters('SAS Server license file'),' -app_name ',parameters('SAS Application Name'),' -mid_name ',variables('mid_vm_name'),' -domain_name ',variables('domain_name'),' -artifact_loc ',parameters('_artifactsLocation'),' -passwd ',parameters('SAS External Password'))]"
 					},
 					"_artifactsLocation": {
 						"value": "[variables('sasclients_power_shell_script')]"
