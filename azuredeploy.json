@@ -313,7 +313,8 @@
 		"AlternateDomain": "[concat(parameters('SAS Application Name'),'viya-',variables('resourceGroupUniqueString'))]",
 		"app_gw_script_sh": "[concat(parameters('_artifactsLocation'),'scripts/agw_ssl.sh', variables('_artifactsLocationSasToken'))]",
         "vnet_agw_pub_subnt": "[concat(parameters('SAS Application Name'),'_vnet_pub2_subnt_',variables('resourceGroupUniqueString'))]",
-		"DomainActual": "[substring(variables('AlternateDomain'),0,if(lessOrEquals(length(variables('AlternateDomain')),60), length(variables('AlternateDomain')), 60))]"
+		"DomainActual": "[substring(variables('AlternateDomain'),0,if(lessOrEquals(length(variables('AlternateDomain')),60), length(variables('AlternateDomain')), 60))]",
+        "ad_integrate_sh": "[concat(parameters('_artifactsLocation'),'scripts/ad_integration.sh', variables('_artifactsLocationSasToken'))]"
 	},
 	"resources": [
 		{
@@ -1875,7 +1876,7 @@
 						"value": "[variables('ansible_vm_name')]"
 					},
 					"commandToExecute": {
-						"value": "[concat('mkdir -p /var/log/sas/install && set -o pipefail; ./ansible_setup.sh',' ',parameters('storage account name'),' ',parameters('file share name'),' ',parameters('viyarepo folder'),' ',parameters('SAS Application Name'),' ',variables('domain_name'),' ',variables('ansible_vm_name'),' ',variables('microservices_vm_name'),' ',variables('cascontroller_vm_name'),' ',variables('spre_vm_name'),' ',variables('casworker_vm_name'),' ',variables('key_vault_secretname_sasinst'),' ',variables('key_vault_secretname_sasext'),' ',variables('key_vault_name'),' ',variables('key_vault_secretname_pvtkey'),' ',variables('key_vault_secretname_pubkey'),' ',parameters('Number Of Viya CAS Nodes'),' ',variables('mid_vm_name'),' ',parameters('_artifactsLocation'),' ',variables('compute_vm_name'),' ',variables('meta_vm_name'),' ',variables('key_vault_secretname_stgacc'),' ',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,' ','2>&1 | tee /var/log/sas/install/runPhase1_HostSetup.log')]"
+						"value": "[concat('mkdir -p /var/log/sas/install && set -o pipefail; ./ansible_setup.sh',' ',parameters('storage account name'),' ',parameters('file share name'),' ',parameters('viyarepo folder'),' ',parameters('SAS Application Name'),' ',variables('domain_name'),' ',variables('ansible_vm_name'),' ',variables('microservices_vm_name'),' ',variables('cascontroller_vm_name'),' ',variables('spre_vm_name'),' ',variables('casworker_vm_name'),' ',variables('key_vault_secretname_sasinst'),' ',variables('key_vault_secretname_sasext'),' ',variables('key_vault_name'),' ',variables('key_vault_secretname_pvtkey'),' ',variables('key_vault_secretname_pubkey'),' ',parameters('Number Of Viya CAS Nodes'),' ',variables('mid_vm_name'),' ',parameters('_artifactsLocation'),' ',variables('compute_vm_name'),' ',variables('meta_vm_name'),' ',variables('key_vault_secretname_stgacc'),' ',reference(resourceId('Microsoft.Network/publicIPAddresses', variables('agw_pub_nw_interface') )).dnsSettings.fqdn,' ',variables('rdp_vm_name'),' ',variables('primary_user_name'),' ','2>&1 | tee /var/log/sas/install/runPhase1_HostSetup.log')]"
 					},
 					"_artifactsLocation": {
 						"value": "[variables('ansible_startup_script_sh')]"
@@ -2069,7 +2070,7 @@
 						"value": "[variables('ansible_vm_name')]"
 					},
 					"commandToExecute": {
-						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '1',' ','2>&1 | tee /var/log/sas/install/runPhase3_viyainstallpart1.log')]"
+						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '1',' ','2>&1 | tee /var/log/sas/install/runPhase7_viyainstallpart1.log')]"
 					},
 					"_artifactsLocation": {
 						"value": "[variables('viya_install_sh')]"
@@ -2100,7 +2101,7 @@
 						"value": "[variables('ansible_vm_name')]"
 					},
 					"commandToExecute": {
-						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '2',' ','2>&1 | tee /var/log/sas/install/runPhase4_viyainstallpart2.log')]"
+						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '2',' ','2>&1 | tee /var/log/sas/install/runPhase8_viyainstallpart2.log')]"
 					},
 					"_artifactsLocation": {
 						"value": "[variables('viya_install_sh')]"
@@ -2131,7 +2132,7 @@
 						"value": "[variables('ansible_vm_name')]"
 					},
 					"commandToExecute": {
-						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '3',' ','2>&1 | tee /var/log/sas/install/runPhase5_viyainstallpart3.log')]"
+						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '3',' ','2>&1 | tee /var/log/sas/install/runPhase9_viyainstallpart3.log')]"
 					},
 					"_artifactsLocation": {
 						"value": "[variables('viya_install_sh')]"
@@ -2162,10 +2163,41 @@
 						"value": "[variables('ansible_vm_name')]"
 					},
 					"commandToExecute": {
-						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '4',' ','2>&1 | tee /var/log/sas/install/runPhase6_viyapostinstall.log')]"
+						"value": "[concat('set -o pipefail;','./viyainstall.sh',' ', '4',' ','2>&1 | tee /var/log/sas/install/runPhase10_viyapostinstall.log')]"
 					},
 					"_artifactsLocation": {
 						"value": "[variables('viya_install_sh')]"
+					},
+					"_artifactsLocationSasToken": {
+						"value": "[variables('_artifactsLocationSasToken')]"
+					}
+				}
+			}
+		},
+        {
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2019-10-01",
+			"name": "Phase11-ADIntegration",
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'Phase10-ViyaPostInstall')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('linux_extension_template')]"
+				},
+				"parameters": {
+					"location": {
+						"value": "[parameters('location')]"
+					},
+					"vmName": {
+						"value": "[variables('ansible_vm_name')]"
+					},
+					"commandToExecute": {
+						"value": "[concat('set -o pipefail;','./ad_integration.sh 2>&1 | tee /var/log/sas/install/runPhase11_adattach.log')]"
+					},
+					"_artifactsLocation": {
+						"value": "[variables('ad_integrate_sh')]"
 					},
 					"_artifactsLocationSasToken": {
 						"value": "[variables('_artifactsLocationSasToken')]"

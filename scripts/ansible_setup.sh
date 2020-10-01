@@ -53,6 +53,8 @@ compute_name=${19}
 meta_name=${20}
 stgacc_secr_name=${21}
 agw_hostname=${22}
+rdp_vm_name=${23}
+ad_user=${24}
 EOF
 
 #Defining variables with facter values
