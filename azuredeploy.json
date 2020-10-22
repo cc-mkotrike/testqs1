@@ -30,7 +30,7 @@
                 "description": "Virtual Network Public Subnet CIDR, ex. 10.10.1.0/24 which should allign with VNET CIDR"
             }
         },
-        "SAS94PrivateSubnetCIDR": {
+        "SAS94privateSubnetCIDR": {
             "defaultValue": "10.10.2.0/24",
             "type": "String",
             "metadata": {
