@@ -1,6 +1,6 @@
 # SAS® QUICKSTART ON MICROSOFT® AZURE
 
-[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcc-mkotrike%2Ftestqs1%2Fdevelop_new%2Fazuredeploy.json) 
+[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcc-mkotrike%2Ftestqs1%2Fcc-sshaik-patch-1%2Fazuredeploy.json) 
 
 
 This README for SAS® 9.4 & SAS® Viya® Quickstart Template for Azure is used to deploy the following SAS 9.4 and SAS Viya products on Microsoft® Azure cloud.
