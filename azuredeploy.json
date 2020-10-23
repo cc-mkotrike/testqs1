@@ -44,35 +44,35 @@
                 "description": "This is the SKU for the Mid VM. The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "windowsRDPVMSize": {
+        "windowsRdpVMSize": {
             "defaultValue": "Standard_D8S_v3",
             "type": "String",
             "metadata": {
                 "description": "This is the SKU for the Mid VM. The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "SAS94MetaVMSize": {
+        "SASMetaVMSize": {
             "defaultValue": "Standard_D4s_v3",
             "type": "String",
             "metadata": {
                 "description": "This is the SKU for the Meta VM.The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "SAS94 Compute VM Size": {
+        "SASCompute VM Size": {
             "defaultValue": "Standard_E8s_v3",
             "type": "String",
             "metadata": {
                 "description": "This is the SKU for the Compute VM.The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "SAS94 Mid VM Size": {
+        "SASMidVMSize": {
             "defaultValue": "Standard_E8s_v3",
             "type": "String",
             "metadata": {
                 "description": "This is the SKU for the Mid VM. The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "SAS94 Data Storage": {
+        "SASDataStorage": {
             "defaultValue": 100,
             "minValue": 100,
             "maxValue": 32767,
@@ -81,7 +81,7 @@
                 "description": "The SAS data volume size for SAS 94"
             }
         },
-        "SAS External Password": {
+        "SASExternalPassword": {
             "minLength": 12,
             "maxLength": 255,
             "type": "SecureString",
@@ -89,7 +89,7 @@
                 "description": "Password for RDP login & SAS admin account in SAS servers"
             }
         },
-        "SAS Internal Password": {
+        "SASInternalPassword": {
             "minLength": 8,
             "maxLength": 255,
             "type": "SecureString",
@@ -97,21 +97,21 @@
                 "description": "Password for SAS Internal Accounts(Metadata & WIP)"
             }
         },
-        "Viya PrivateSubnet CIDR": {
+        "ViyaPrivateSubnetCIDR": {
             "defaultValue": "10.10.3.0/24",
             "type": "String",
             "metadata": {
                 "description": "Virtual Network Private Subnet CIDR, ex. 10.10.3.0/24 which should allign with VNET CIDR"
             }
         },
-        "Viya Microservices VM Size": {
+        "ViyaMicroservicesVMSize": {
             "defaultValue": "Standard_E16s_v3",
             "type": "String",
             "metadata": {
                 "description": "This is the SKU for the MicroServices VM. The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "Viya SPRE VM Size": {
+        "ViyaSPREVMSize": {
             "defaultValue": "Standard_E8s_v3",
             "type": "String",
             "metadata": {
