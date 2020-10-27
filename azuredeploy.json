@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "SAS_ApplicationName": {
+        "SASApplicationName": {
             "minLength": 2,
             "maxLength": 5,
             "type": "String",
@@ -30,7 +30,7 @@
                 "description": "Virtual Network Public Subnet CIDR, ex. 10.10.1.0/24 which should allign with VNET CIDR"
             }
         },
-        "SAS94privateSubnetCIDR": {
+        "SASPrivateSubnetCIDR": {
             "defaultValue": "10.10.2.0/24",
             "type": "String",
             "metadata": {
@@ -44,7 +44,7 @@
                 "description": "This is the SKU for the Mid VM. The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "windowsRDPVMSize": {
+        "windowsRdpVMSize": {
             "defaultValue": "Standard_D8S_v3",
             "type": "String",
             "metadata": {
@@ -111,7 +111,7 @@
                 "description": "This is the SKU for the MicroServices VM. The default SKU value represents the minimum recommended size for system stability in most SAS software license sets. The selected SKU must support premium disks. For details: https://azure.microsoft.com/en-in/pricing/details/virtual-machines/red-hat/"
             }
         },
-        "viyaSPREVMSize": {
+        "viyaSpreVMSize": {
             "defaultValue": "Standard_E8s_v3",
             "type": "String",
             "metadata": {
@@ -174,7 +174,7 @@
                 "description": "Folder Name in Azure File share where SAS94 depot is located"
             }
         },
-        "viyarepoFolder": {
+        "viyaRepoFolder": {
             "type": "String",
             "metadata": {
                 "description": "Folder Name in Azure File share where SAS Viya Repo is located"
